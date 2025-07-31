@@ -22,7 +22,8 @@ import {
   VideoPresets,
   LocalTrackPublication,
 } from 'livekit-client'
-import { getSocket } from '@/lib/socket'
+import { StudioChatSupabase } from '@/components/studio-chat-supabase'
+import { useSupabasePresence, useSupabaseStreamStats } from '@/lib/supabase-hooks'
 
 interface Stream {
   id: string
@@ -105,10 +106,9 @@ export default function StudioPage() {
   const [showChat, setShowChat] = useState(false)
   const [viewerCount, setViewerCount] = useState(0)
   const [heartCount, setHeartCount] = useState(0)
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
-  const [chatInput, setChatInput] = useState('')
-  const socketRef = useRef<any>(null)
-  const chatContainerRef = useRef<HTMLDivElement>(null)
+  // Use Supabase hooks for real-time features
+  const { viewerCount: supabaseViewerCount } = useSupabasePresence(streamId, true)
+  const { stats } = useSupabaseStreamStats(streamId)
   
   const localVideoRef = useRef<HTMLVideoElement>(null)
   const remoteVideoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({})
@@ -119,40 +119,11 @@ export default function StudioPage() {
     fetchHostInvites()
     initializePreview()
     
-    // Initialize Socket.io for chat and real-time updates
-    const socket = getSocket()
-    socketRef.current = socket
-    
-    socket.connect()
-    socket.emit('join-stream', { streamId, userId: session?.user?.id, isHost: true })
-    
-    // Listen for chat messages
-    socket.on('chat-message', (message: ChatMessage) => {
-      setChatMessages(prev => [...prev, message])
-      // Auto-scroll to bottom
-      setTimeout(() => {
-        if (chatContainerRef.current) {
-          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
-        }
-      }, 100)
-    })
-    
-    // Listen for viewer count updates
-    socket.on('viewer-count', (count: number) => {
-      setViewerCount(count)
-    })
-    
-    // Listen for heart events
-    socket.on('heart-sent', () => {
-      setHeartCount(prev => prev + 1)
-    })
+    // Supabase real-time subscriptions are handled by hooks
     
     return () => {
       stopPreview()
-      if (socketRef.current) {
-        socketRef.current.emit('leave-stream', { streamId })
-        socketRef.current.disconnect()
-      }
+      // Cleanup handled by Supabase hooks
     }
   }, [streamId])
 
@@ -640,26 +611,15 @@ export default function StudioPage() {
     }
   }
 
-  const sendChatMessage = () => {
-    if (!chatInput.trim() || !socketRef.current || !session?.user) return
-    
-    const message: ChatMessage = {
-      id: Date.now().toString(),
-      message: chatInput.trim(),
-      userId: session.user.id,
-      userName: session.user.name || 'Host',
-      timestamp: new Date(),
-    }
-    
-    // Send via Socket.io
-    socketRef.current.emit('send-message', {
-      streamId,
-      message: message.message,
-    })
-    
-    // Clear input
-    setChatInput('')
-  }
+  // Update viewer count from Supabase
+  useEffect(() => {
+    setViewerCount(supabaseViewerCount)
+  }, [supabaseViewerCount])
+  
+  // Update heart count from Supabase
+  useEffect(() => {
+    setHeartCount(stats.heart_count)
+  }, [stats.heart_count])
 
   const stopBroadcast = async () => {
     try {
@@ -824,13 +784,24 @@ export default function StudioPage() {
       }
       
       // If connected to LiveKit, republish with new track
-      if (room && isConnected) {
+      if (room && isConnected && room.localParticipant) {
         const newVideoTrack = streamRef.current.getVideoTracks()[0]
         if (newVideoTrack) {
-          await room.localParticipant.publishTrack(newVideoTrack, {
-            name: 'camera',
-            source: Track.Source.Camera,
-          })
+          try {
+            // Find and unpublish the old video track
+            const videoPublication = Array.from(room.localParticipant.videoTracks.values())[0]
+            if (videoPublication && videoPublication.track) {
+              await room.localParticipant.unpublishTrack(videoPublication.track)
+            }
+            
+            // Publish the new video track
+            await room.localParticipant.publishTrack(newVideoTrack, {
+              name: 'camera',
+              source: Track.Source.Camera,
+            })
+          } catch (error) {
+            console.error('Error updating LiveKit video track:', error)
+          }
         }
       }
       
@@ -879,11 +850,22 @@ export default function StudioPage() {
         streamRef.current.addTrack(newAudioTrack)
         
         // If connected to LiveKit, republish with new track
-        if (room && isConnected && newAudioTrack) {
-          await room.localParticipant.publishTrack(newAudioTrack, {
-            name: 'microphone',
-            source: Track.Source.Microphone,
-          })
+        if (room && isConnected && room.localParticipant && newAudioTrack) {
+          try {
+            // Find and unpublish the old audio track
+            const audioPublication = Array.from(room.localParticipant.audioTracks.values())[0]
+            if (audioPublication && audioPublication.track) {
+              await room.localParticipant.unpublishTrack(audioPublication.track)
+            }
+            
+            // Publish the new audio track
+            await room.localParticipant.publishTrack(newAudioTrack, {
+              name: 'microphone',
+              source: Track.Source.Microphone,
+            })
+          } catch (error) {
+            console.error('Error updating LiveKit audio track:', error)
+          }
         }
       }
       
@@ -1333,65 +1315,11 @@ export default function StudioPage() {
           
           {/* Chat Panel - Right Column */}
           {showChat && (
-            <div className="w-80 p-4 bg-gray-900 border-l border-gray-800 flex flex-col">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">Live Chat</h3>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  onClick={() => setShowChat(false)}
-                  className="h-8 w-8 text-gray-400 hover:text-white"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-              
-              <div className="flex-1 bg-gray-800 rounded-lg p-4 mb-4 overflow-y-auto min-h-0" ref={chatContainerRef}>
-                <div className="space-y-3">
-                  {chatMessages.length === 0 ? (
-                    <div className="text-center text-gray-500 text-sm py-8">
-                      No messages yet. Start the conversation!
-                    </div>
-                  ) : (
-                    chatMessages.map((msg) => (
-                      <div key={msg.id} className={`flex flex-col ${msg.userId === session?.user?.id ? 'items-end' : 'items-start'}`}>
-                        <div className={`max-w-[80%] rounded-lg px-3 py-2 ${
-                          msg.userId === session?.user?.id 
-                            ? 'bg-blue-600 text-white' 
-                            : 'bg-gray-700 text-gray-100'
-                        }`}>
-                          <p className="text-sm">{msg.message}</p>
-                        </div>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {msg.userName} • {new Date(msg.timestamp).toLocaleTimeString()}
-                        </p>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-              
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Type a message..."
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault()
-                      sendChatMessage()
-                    }
-                  }}
-                />
-                <Button 
-                  className="bg-blue-600 hover:bg-blue-700"
-                  onClick={sendChatMessage}
-                  disabled={!chatInput.trim()}
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
+            <div className="w-80 h-full">
+              <StudioChatSupabase 
+                streamId={streamId} 
+                onClose={() => setShowChat(false)} 
+              />
             </div>
           )}
         </div>
