@@ -1,7 +1,7 @@
 'use client'
 
 import MuxPlayer from '@mux/mux-player-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface VideoPlayerProps {
   playbackId: string
@@ -11,6 +11,12 @@ interface VideoPlayerProps {
 
 export function VideoPlayer({ playbackId, title, isLive = false }: VideoPlayerProps) {
   const [hasError, setHasError] = useState(false)
+  
+  // Reset error state when playbackId changes
+  useEffect(() => {
+    setHasError(false)
+    console.log('VideoPlayer: playbackId changed to:', playbackId)
+  }, [playbackId])
   
   // Don't render the player if there's no valid playback ID
   if (!playbackId || playbackId === 'null' || playbackId === 'undefined') {

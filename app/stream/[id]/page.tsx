@@ -34,20 +34,28 @@ export default function StreamViewerPage() {
 
   useEffect(() => {
     fetchStream()
+  }, [streamId])
+
+  useEffect(() => {
     // Refresh stream data more frequently when waiting for video
-    const refreshInterval = stream?.status === 'LIVE' && !stream?.muxPlaybackId ? 2000 : 10000
+    const refreshInterval = stream?.status === 'LIVE' && !stream?.muxPlaybackId ? 1000 : 5000
     const interval = setInterval(fetchStream, refreshInterval)
     
     return () => {
       clearInterval(interval)
     }
-  }, [streamId, stream?.status, stream?.muxPlaybackId])
+  }, [stream?.status, stream?.muxPlaybackId])
 
   const fetchStream = async () => {
     try {
       const response = await fetch(`/api/streams/${streamId}`)
       if (response.ok) {
         const data = await response.json()
+        console.log('Stream data updated:', {
+          status: data.status,
+          muxPlaybackId: data.muxPlaybackId,
+          streamType: data.streamType
+        })
         setStream(data)
       }
     } catch (error) {
