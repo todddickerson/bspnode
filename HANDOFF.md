@@ -2,40 +2,51 @@
 
 ## Current Session Summary
 **Date**: January 31, 2025
-**Last Update**: Socket.io chat integration fixes + Supabase setup
+**Last Update**: Fixed studio state variables + identified real-time chat issues
 
-## Active Issues & TODOs
+## Critical Issues Needing Immediate Attention
 
-### 1. **Supabase Integration** 🔴 NEEDS MANUAL SETUP
-- **Status**: Supabase connected but tables need to be created
-- **Progress**: 
-  - ✅ Installed @supabase/supabase-js
-  - ✅ Created lib/supabase.ts client configuration
-  - ✅ Updated .env.example with Supabase variables
-  - ✅ Supabase keys added to .env.local
-  - ✅ Created migration SQL files
-  - ✅ Migrated viewer and studio pages to use Supabase
-- **Action Required**: 
-  1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
-  2. Select your project (pdgqkfmghtvfubffzctq)
-  3. Go to SQL Editor
-  4. Run the SQL from `supabase/migrations/002_simplified_schema.sql`
+### 1. **Real-time Chat Not Working** 🔴 CRITICAL
+- **Problem**: Chat messages don't update in real-time for studio or viewer modes
+- **Symptoms**: Messages only appear after page refresh
+- **Root Cause**: Likely Supabase real-time subscription issues
+- **Files Affected**:
+  - `/lib/supabase-hooks.ts` - Chat subscription logic
+  - `/components/studio-chat-supabase.tsx` - Studio chat UI
+  - `/components/chat-supabase.tsx` - Viewer chat UI
+- **Debug Steps Needed**:
+  1. Verify Supabase environment variables in `.env.local`
+  2. Check Supabase dashboard for real-time permissions/RLS policies
+  3. Add console logging to subscription events
+  4. Test manual database inserts via Supabase dashboard
 
-### 2. **Multi-Host Display Layouts** 🟢 FEATURE REQUEST
+### 2. **Video Feed Quality Issues** 🟡 INVESTIGATION NEEDED
+- **Problem**: Camera feed sometimes shows "For video API test purposes only"
+- **Location**: Studio page video element
+- **Potential Causes**:
+  - LiveKit track not publishing correctly
+  - Egress not capturing right video source
+  - Device switching affecting video feed
+- **Next Steps**: Add debugging to track publishing state
+
+### 3. **Multi-Host Display Layouts** 🟢 FEATURE REQUEST
 - **Description**: Allow hosts to choose different display layouts for multi-host streams
 - **Options**: Grid view, Speaker focus, Picture-in-Picture, etc.
 - **Reference**: Use LiveKit's layout options (check with context7 MCP)
 - **Status**: TODO - Not started
 
-## Recent Changes Completed
+## Recent Changes Completed This Session
 
-### ✅ Socket.io Real-time Features
-- Fixed chat message format mismatch between client and server
-- Implemented viewer count tracking (excluding hosts)
-- Added heart reaction events
-- Chat messages now persist to database
-- Message history loads when joining stream
-- Updated chat component to use correct Socket.io events
+### ✅ Studio State Variables Fixed
+- Added missing `isCameraOn` and `isMicOn` state variables
+- Fixed UI controls sync with actual track states
+- Resolved TypeScript errors in studio page
+
+### ✅ Previous Session Completions
+- Supabase migration SQL executed successfully
+- Chat/presence/stats tables created in Supabase
+- Real-time hooks implemented (but not functioning properly)
+- Socket.io to Supabase migration attempted
 
 ### ✅ Secure Host Invites
 - Implemented token-based invite system

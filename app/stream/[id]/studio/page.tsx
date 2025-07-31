@@ -90,6 +90,8 @@ export default function StudioPage() {
   const [isLive, setIsLive] = useState(false)
   const [isVideoEnabled, setIsVideoEnabled] = useState(true)
   const [isAudioEnabled, setIsAudioEnabled] = useState(true)
+  const [isCameraOn, setIsCameraOn] = useState(true)
+  const [isMicOn, setIsMicOn] = useState(true)
   const [inviteLink, setInviteLink] = useState('')
   const [room, setRoom] = useState<Room | null>(null)
   const [showSettings, setShowSettings] = useState(false)
@@ -620,6 +622,25 @@ export default function StudioPage() {
   useEffect(() => {
     setHeartCount(stats.heart_count)
   }, [stats.heart_count])
+  
+  // Sync UI controls with actual track states
+  useEffect(() => {
+    if (room && room.localParticipant && isConnected) {
+      const participant = room.localParticipant
+      
+      // Check video track state
+      const videoTrack = Array.from(participant.videoTracks.values())[0]
+      if (videoTrack) {
+        setIsCameraOn(!videoTrack.isMuted)
+      }
+      
+      // Check audio track state  
+      const audioTrack = Array.from(participant.audioTracks.values())[0]
+      if (audioTrack) {
+        setIsMicOn(!audioTrack.isMuted)
+      }
+    }
+  }, [room, isConnected])
 
   const stopBroadcast = async () => {
     try {
@@ -1091,20 +1112,20 @@ export default function StudioPage() {
               <h3 className="font-medium mb-3">Controls</h3>
               <div className="flex gap-2 mb-3">
                 <Button
-                  variant={isVideoEnabled ? "default" : "secondary"}
+                  variant={isCameraOn ? "default" : "secondary"}
                   size="icon"
                   onClick={toggleVideo}
                   disabled={!isConnected}
                 >
-                  {isVideoEnabled ? <Video className="h-4 w-4" /> : <VideoOff className="h-4 w-4" />}
+                  {isCameraOn ? <Video className="h-4 w-4" /> : <VideoOff className="h-4 w-4" />}
                 </Button>
                 <Button
-                  variant={isAudioEnabled ? "default" : "secondary"}
+                  variant={isMicOn ? "default" : "secondary"}
                   size="icon"
                   onClick={toggleAudio}
                   disabled={!isConnected}
                 >
-                  {isAudioEnabled ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
+                  {isMicOn ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
                 </Button>
                 <Button
                   variant="secondary"
