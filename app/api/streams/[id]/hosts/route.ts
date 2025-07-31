@@ -64,14 +64,27 @@ export async function POST(
 
     const { userId, role = 'HOST' } = await req.json()
 
-    // Check if requester is stream owner
+    // Get the stream
     const stream = await prisma.stream.findUnique({
       where: { id: params.id },
     })
 
-    if (!stream || stream.userId !== session.user.id) {
+    if (!stream) {
       return NextResponse.json(
-        { message: 'Only stream owner can add hosts' },
+        { message: 'Stream not found' },
+        { status: 404 }
+      )
+    }
+
+    // Check permissions:
+    // 1. Stream owner can add anyone
+    // 2. Users can add themselves (for join links)
+    const isStreamOwner = stream.userId === session.user.id
+    const isAddingSelf = userId === session.user.id
+
+    if (!isStreamOwner && !isAddingSelf) {
+      return NextResponse.json(
+        { message: 'You can only add yourself as a host' },
         { status: 403 }
       )
     }
@@ -95,6 +108,22 @@ export async function POST(
     if (currentHostsCount >= (stream.maxHosts || 4)) {
       return NextResponse.json(
         { message: 'Maximum number of hosts reached' },
+        { status: 400 }
+      )
+    }
+
+    // Check if user is already a host
+    const existingHost = await prisma.streamHost.findFirst({
+      where: {
+        streamId: params.id,
+        userId,
+        leftAt: null,
+      },
+    })
+
+    if (existingHost) {
+      return NextResponse.json(
+        { message: 'User is already a host' },
         { status: 400 }
       )
     }

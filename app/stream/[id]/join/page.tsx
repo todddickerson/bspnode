@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/components/ui/use-toast'
-import { Loader2, Users, Video } from 'lucide-react'
+import { Loader2, Users, Video, AlertCircle } from 'lucide-react'
 
 interface Stream {
   id: string
@@ -25,7 +25,9 @@ interface Stream {
 
 export default function JoinStreamPage() {
   const params = useParams()
+  const searchParams = useSearchParams()
   const streamId = params.id as string
+  const inviteToken = searchParams.get('token')
   const { data: session, status } = useSession()
   const router = useRouter()
   const { toast } = useToast()
@@ -33,14 +35,18 @@ export default function JoinStreamPage() {
   const [stream, setStream] = useState<Stream | null>(null)
   const [loading, setLoading] = useState(true)
   const [joining, setJoining] = useState(false)
+  const [inviteError, setInviteError] = useState<string | null>(null)
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push(`/login?callbackUrl=/stream/${streamId}/join`)
+      const callbackUrl = inviteToken 
+        ? `/stream/${streamId}/join?token=${inviteToken}`
+        : `/stream/${streamId}/join`
+      router.push(`/login?callbackUrl=${encodeURIComponent(callbackUrl)}`)
     } else if (status === 'authenticated') {
       fetchStream()
     }
-  }, [status, streamId])
+  }, [status, streamId, inviteToken])
 
   const fetchStream = async () => {
     try {
@@ -68,28 +74,41 @@ export default function JoinStreamPage() {
     if (!session?.user?.id) return
     
     setJoining(true)
+    setInviteError(null)
     
     try {
-      const response = await fetch(`/api/streams/${streamId}/hosts`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: session.user.id,
-          role: 'HOST',
-        }),
-      })
-
-      if (response.ok) {
-        toast({
-          title: 'Success!',
-          description: 'You have been added as a host',
+      // If we have an invite token, validate it instead of directly adding to hosts
+      if (inviteToken) {
+        const response = await fetch('/api/invites/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token: inviteToken,
+            streamId: streamId,
+          }),
         })
-        router.push(`/stream/${streamId}/studio`)
+
+        if (response.ok) {
+          toast({
+            title: 'Success!',
+            description: 'You have been added as a host via invite',
+          })
+          router.push(`/stream/${streamId}/studio`)
+        } else {
+          const error = await response.json()
+          setInviteError(error.message || 'Invalid invite')
+          toast({
+            title: 'Invite Error',
+            description: error.message || 'Failed to join with invite',
+            variant: 'destructive',
+          })
+        }
       } else {
-        const error = await response.json()
+        // Legacy behavior - direct join without invite (should be restricted)
+        setInviteError('An invite token is required to join as a host')
         toast({
-          title: 'Error',
-          description: error.message || 'Failed to join stream',
+          title: 'Access Denied',
+          description: 'You need a valid invite link to join as a host',
           variant: 'destructive',
         })
       }
@@ -174,14 +193,25 @@ export default function JoinStreamPage() {
             )}
           </div>
 
+          {inviteError && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-center">
+                <AlertCircle className="h-4 w-4 text-red-800 mr-2" />
+                <p className="text-sm text-red-800">{inviteError}</p>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-3">
             <Button
               onClick={joinAsHost}
-              disabled={joining || hostsRemaining <= 0}
+              disabled={joining || hostsRemaining <= 0 || (!inviteToken)}
               className="w-full"
             >
               {joining ? (
                 <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Joining...</>
+              ) : !inviteToken ? (
+                'Valid Invite Required'
               ) : hostsRemaining <= 0 ? (
                 'Stream is Full'
               ) : (

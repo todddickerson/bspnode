@@ -60,3 +60,210 @@ RTMP egress started: {
   layout: 'speaker',
   urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
 }
+ ✓ Compiled /stream/[id]/join in 401ms (1306 modules)
+ ✓ Compiled /api/streams/[id]/end in 106ms (973 modules)
+ ○ Compiling /stream/[id] ...
+ ✓ Compiled /stream/[id] in 1073ms (1598 modules)
+User connected: QUQ9AnhsoX1nA_88AAAB
+User QUQ9AnhsoX1nA_88AAAB joined stream cmdqmum1r0005g340kvv0okco
+User QUQ9AnhsoX1nA_88AAAB left stream cmdqmum1r0005g340kvv0okco
+User QUQ9AnhsoX1nA_88AAAB joined stream cmdqmum1r0005g340kvv0okco
+ ✓ Compiled /api/streams/[id]/messages in 109ms (1140 modules)
+ ✓ Compiled / in 267ms (1171 modules)
+User disconnected: QUQ9AnhsoX1nA_88AAAB
+ ✓ Compiled /login in 210ms (1642 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: iq4zYZkCtGmXrCOsa55y6tBZmJ3q9uCM01GU8wSg02ay8
+RTMP egress started: {
+  egressId: 'EG_3UVxHi9FGrnX',
+  roomName: 'cmdqmwbba0009g3407hv1ny5o',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+Error adding host: PrismaClientKnownRequestError: 
+Invalid `prisma.streamHost.create()` invocation:
+
+
+Unique constraint failed on the fields: (`userId`,`streamId`)
+    at $n.handleRequestError (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:121:7315)
+    at $n.handleAndLogRequestError (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at async l (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at async POST (webpack-internal:///(rsc)/./app/api/streams/[id]/hosts/route.ts:102:22)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13) {
+  code: 'P2002',
+  clientVersion: '5.22.0',
+  meta: { modelName: 'StreamHost', target: [ 'userId', 'streamId' ] }
+}
+Error adding host: PrismaClientKnownRequestError: 
+Invalid `prisma.streamHost.create()` invocation:
+
+
+Unique constraint failed on the fields: (`userId`,`streamId`)
+    at $n.handleRequestError (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:121:7315)
+    at $n.handleAndLogRequestError (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:121:6623)
+    at $n.request (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:121:6307)
+    at async l (/Users/todddickerson/src/GitHub/bspnode/node_modules/@prisma/client/runtime/library.js:130:9633)
+    at async POST (webpack-internal:///(rsc)/./app/api/streams/[id]/hosts/route.ts:102:22)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13) {
+  code: 'P2002',
+  clientVersion: '5.22.0',
+  meta: { modelName: 'StreamHost', target: [ 'userId', 'streamId' ] }
+}
+ ✓ Compiled /not-found in 261ms (1643 modules)
+ ✓ Compiled in 396ms (1642 modules)
+Error starting stream: {
+  code: 'UNAUTHORIZED',
+  message: 'Unauthorized access to stream',
+  recoverable: false
+}
+Error starting stream: {
+  code: 'UNAUTHORIZED',
+  message: 'Unauthorized access to stream',
+  recoverable: false
+}
+User connected: _F1eKlX2_ka8aGU0AAAD
+User _F1eKlX2_ka8aGU0AAAD joined stream cmdqmwbba0009g3407hv1ny5o
+User _F1eKlX2_ka8aGU0AAAD left stream cmdqmwbba0009g3407hv1ny5o
+User _F1eKlX2_ka8aGU0AAAD joined stream cmdqmwbba0009g3407hv1ny5o
+ ✓ Compiled /api/streams/[id]/messages in 230ms (1157 modules)
+ ✓ Compiled in 173ms (478 modules)
+ ✓ Compiled in 149ms (478 modules)
+ ✓ Compiled in 84ms (478 modules)
+ ✓ Compiled in 365ms (1179 modules)
+ ✓ Compiled in 376ms (1021 modules)
+ ✓ Compiled in 174ms (1021 modules)
+ ✓ Compiled in 0ms (543 modules)
+ ✓ Compiled in 0ms (543 modules)
+ ✓ Compiled in 0ms (543 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 0ms (543 modules)
+ ✓ Compiled (771 modules)
+ ✓ Compiled in 193ms (1249 modules)
+ ✓ Compiled /not-found in 340ms (1240 modules)
+User disconnected: _F1eKlX2_ka8aGU0AAAD
+ ✓ Compiled /api/auth/[...nextauth] in 78ms (776 modules)
+User connected: 0I7_CWIdIIJ_mtpJAAAF
+User 0I7_CWIdIIJ_mtpJAAAF joined stream cmdqmwbba0009g3407hv1ny5o
+ ✓ Compiled /api/streams/[id]/messages in 85ms (778 modules)
+User 0I7_CWIdIIJ_mtpJAAAF left stream cmdqmwbba0009g3407hv1ny5o
+User 0I7_CWIdIIJ_mtpJAAAF joined stream cmdqmwbba0009g3407hv1ny5o
+ ✓ Compiled in 236ms (1258 modules)
+ ✓ Compiled in 321ms (1260 modules)
+ ✓ Compiled in 236ms (1260 modules)
+ ✓ Compiled in 219ms (1260 modules)
+ ✓ Compiled in 272ms (1260 modules)
+ ✓ Compiled in 1ms (779 modules)
+ ✓ Compiled in 0ms (779 modules)
+ ✓ Compiled in 0ms (779 modules)
+ ✓ Compiled in 0ms (779 modules)
+ ✓ Compiled in 315ms (1260 modules)
+ ✓ Compiled in 275ms (1253 modules)
+ ✓ Compiled /api/streams/[id]/start in 365ms (1156 modules)
+Error starting stream: {
+  code: 'ALREADY_BROADCASTING',
+  message: 'Stream is already broadcasting',
+  recoverable: false
+}
+ ✓ Compiled /api/streams/[id]/token in 101ms (1158 modules)
+ ✓ Compiled in 219ms (1637 modules)
+ ✓ Compiled in 305ms (1641 modules)
+ ✓ Compiled in 337ms (1643 modules)
+ ✓ Compiled in 486ms (1031 modules)
+ ✓ Compiled in 194ms (1031 modules)
+ ✓ Compiled in 81ms (483 modules)
+ ✓ Compiled in 175ms (1031 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 640ms (1022 modules)
+User disconnected: 0I7_CWIdIIJ_mtpJAAAF
+ ○ Compiling /api/streams/[id]/hosts ...
+ ✓ Compiled /api/streams/[id]/hosts in 629ms (779 modules)
+ ✓ Compiled (783 modules)
+User connected: 32R6WzCFo-3W98QlAAAH
+User 32R6WzCFo-3W98QlAAAH joined stream cmdqmwbba0009g3407hv1ny5o
+Error fetching invites: TypeError: Cannot read properties of undefined (reading 'findMany')
+    at GET (webpack-internal:///(rsc)/./app/api/streams/[id]/invites/route.ts:58:90)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+Error fetching invites: TypeError: Cannot read properties of undefined (reading 'findMany')
+    at GET (webpack-internal:///(rsc)/./app/api/streams/[id]/invites/route.ts:58:90)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+ ✓ Compiled /api/streams/[id]/messages in 89ms (785 modules)
+User 32R6WzCFo-3W98QlAAAH left stream cmdqmwbba0009g3407hv1ny5o
+User 32R6WzCFo-3W98QlAAAH joined stream cmdqmwbba0009g3407hv1ny5o
+ ✓ Compiled /api/streams in 386ms (1165 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 451ms (1650 modules)
+ ✓ Compiled in 299ms (1650 modules)
+User disconnected: 32R6WzCFo-3W98QlAAAH
+User connected: elN8_0hO8pmEQ9oiAAAJ
+User disconnected: elN8_0hO8pmEQ9oiAAAJ
+User connected: nfunAyD29FPK5dTNAAAL
+User nfunAyD29FPK5dTNAAAL joined stream cmdqmwbba0009g3407hv1ny5o
+User nfunAyD29FPK5dTNAAAL left stream cmdqmwbba0009g3407hv1ny5o
+User nfunAyD29FPK5dTNAAAL joined stream cmdqmwbba0009g3407hv1ny5o

@@ -22,6 +22,7 @@ model User {
   streams       Stream[]
   messages      Message[]
   hostedStreams StreamHost[]
+  createdInvites HostInvite[]
 }
 
 model Stream {
@@ -65,6 +66,7 @@ model Stream {
   user          User      @relation(fields: [userId], references: [id])
   messages      Message[]
   hosts         StreamHost[]  // Hosts for collaborative streams
+  hostInvites   HostInvite[]  // Invite tokens for this stream
   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -115,6 +117,29 @@ enum HostRole {
   OWNER    // Stream creator
   HOST     // Co-host with full permissions
   GUEST    // Limited permissions
+}
+
+model HostInvite {
+  id            String    @id @default(cuid())
+  token         String    @unique
+  role          HostRole  @default(HOST)
+  maxUses       Int       @default(1)
+  usedCount     Int       @default(0)
+  expiresAt     DateTime?
+  createdBy     String
+  isActive      Boolean   @default(true)
+  
+  // Relations
+  streamId      String
+  stream        Stream    @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  creator       User      @relation(fields: [createdBy], references: [id])
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([streamId])
+  @@index([token])
+  @@index([expiresAt])
 }
 
 model Message {

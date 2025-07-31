@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/use-toast'
 import { 
   Video, VideoOff, Mic, MicOff, Radio, Square, Loader2, 
-  Users, Copy, Share2, Settings, Phone, PhoneOff 
+  Users, Copy, Share2, Settings, Phone, PhoneOff, Plus, X, Heart, MessageCircle,
+  Eye, Clock, Trash2 
 } from 'lucide-react'
 import {
   Room,
@@ -47,6 +48,23 @@ interface Host {
   }
 }
 
+interface HostInvite {
+  id: string
+  token: string
+  role: string
+  maxUses: number
+  usedCount: number
+  expiresAt: string | null
+  isActive: boolean
+  inviteUrl?: string
+  creator: {
+    id: string
+    name: string
+    email: string
+  }
+  createdAt: string
+}
+
 export default function StudioPage() {
   const params = useParams()
   const streamId = params.id as string
@@ -72,12 +90,20 @@ export default function StudioPage() {
   const [hasPermission, setHasPermission] = useState(false)
   const [permissionError, setPermissionError] = useState<string | null>(null)
   
+  // New state for enhanced features
+  const [hostInvites, setHostInvites] = useState<HostInvite[]>([])
+  const [showInviteDialog, setShowInviteDialog] = useState(false)
+  const [showChat, setShowChat] = useState(false)
+  const [viewerCount, setViewerCount] = useState(0)
+  const [heartCount, setHeartCount] = useState(0)
+  
   const localVideoRef = useRef<HTMLVideoElement>(null)
   const remoteVideoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({})
   const streamRef = useRef<MediaStream | null>(null)
 
   useEffect(() => {
     fetchStreamAndHosts()
+    fetchHostInvites()
     initializePreview()
     return () => {
       stopPreview()
@@ -164,14 +190,98 @@ export default function StudioPage() {
           }
         }
         
-        // Generate invite link
-        const baseUrl = window.location.origin
-        setInviteLink(`${baseUrl}/stream/${streamId}/join`)
+        // Update viewer count periodically
+        setViewerCount(streamData.viewerCount || 0)
       }
     } catch (error) {
       console.error('Error fetching stream:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchHostInvites = async () => {
+    try {
+      const response = await fetch(`/api/streams/${streamId}/invites`)
+      if (response.ok) {
+        const invites = await response.json()
+        setHostInvites(invites)
+        
+        // Set the most recent active invite as the default invite link
+        const activeInvite = invites.find((invite: HostInvite) => 
+          invite.isActive && 
+          !isInviteExpired(invite) && 
+          !isInviteExhausted(invite)
+        )
+        if (activeInvite?.inviteUrl) {
+          setInviteLink(activeInvite.inviteUrl)
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching invites:', error)
+    }
+  }
+
+  const createHostInvite = async (options: { role?: string; maxUses?: number; expiresInHours?: number } = {}) => {
+    try {
+      const response = await fetch(`/api/streams/${streamId}/invites`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(options),
+      })
+
+      if (response.ok) {
+        const newInvite = await response.json()
+        setHostInvites(prev => [newInvite, ...prev])
+        setInviteLink(newInvite.inviteUrl)
+        toast({
+          title: 'Invite Created',
+          description: 'New host invite link generated successfully',
+        })
+        return newInvite
+      } else {
+        const error = await response.json()
+        toast({
+          title: 'Error',
+          description: error.message || 'Failed to create invite',
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to create invite',
+        variant: 'destructive',
+      })
+    }
+  }
+
+  const revokeHostInvite = async (inviteId: string) => {
+    try {
+      const response = await fetch(`/api/streams/${streamId}/invites/${inviteId}`, {
+        method: 'DELETE',
+      })
+
+      if (response.ok) {
+        setHostInvites(prev => prev.filter(invite => invite.id !== inviteId))
+        toast({
+          title: 'Invite Revoked',
+          description: 'Host invite has been revoked',
+        })
+      } else {
+        const error = await response.json()
+        toast({
+          title: 'Error',
+          description: error.message || 'Failed to revoke invite',
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to revoke invite',
+        variant: 'destructive',
+      })
     }
   }
 
@@ -498,12 +608,65 @@ export default function StudioPage() {
     }
   }
 
-  const copyInviteLink = () => {
-    navigator.clipboard.writeText(inviteLink)
+  const copyInviteLink = (url?: string) => {
+    const linkToCopy = url || inviteLink
+    if (linkToCopy) {
+      navigator.clipboard.writeText(linkToCopy)
+      toast({
+        title: 'Copied!',
+        description: 'Host invite link copied to clipboard',
+      })
+    }
+  }
+
+  const copyViewerLink = () => {
+    const viewerUrl = `${window.location.origin}/stream/${streamId}`
+    navigator.clipboard.writeText(viewerUrl)
     toast({
       title: 'Copied!',
-      description: 'Invite link copied to clipboard',
+      description: 'Viewer link copied to clipboard',
     })
+  }
+
+  const formatTime = (dateString: string) => {
+    return new Date(dateString).toLocaleString()
+  }
+
+  const isInviteExpired = (invite: HostInvite) => {
+    return invite.expiresAt && new Date(invite.expiresAt) < new Date()
+  }
+
+  const isInviteExhausted = (invite: HostInvite) => {
+    return invite.usedCount >= invite.maxUses
+  }
+
+  const kickHost = async (hostId: string, hostName: string) => {
+    try {
+      const response = await fetch(`/api/streams/${streamId}/hosts/${hostId}`, {
+        method: 'DELETE',
+      })
+
+      if (response.ok) {
+        setHosts(prev => prev.filter(host => host.id !== hostId))
+        toast({
+          title: 'Host Removed',
+          description: `${hostName} has been removed from the stream`,
+        })
+      } else {
+        const error = await response.json()
+        toast({
+          title: 'Error',
+          description: error.message || 'Failed to remove host',
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to remove host',
+        variant: 'destructive',
+      })
+    }
   }
 
   const leaveStudio = () => {
@@ -825,10 +988,40 @@ export default function StudioPage() {
 
           {/* Sidebar */}
           <div className="w-80 bg-gray-800 p-4 flex flex-col gap-4">
+            {/* Stream Stats */}
+            {isLive && (
+              <div className="bg-gray-700 rounded-lg p-4">
+                <h3 className="font-medium mb-3">Live Stats</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <Eye className="h-4 w-4" />
+                      Viewers
+                    </span>
+                    <span className="font-medium">{viewerCount}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <Heart className="h-4 w-4" />
+                      Hearts
+                    </span>
+                    <span className="font-medium">{heartCount}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <Users className="h-4 w-4" />
+                      Hosts
+                    </span>
+                    <span className="font-medium">{hosts.length}/{stream?.maxHosts}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Controls */}
             <div className="bg-gray-700 rounded-lg p-4">
               <h3 className="font-medium mb-3">Controls</h3>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mb-3">
                 <Button
                   variant={isVideoEnabled ? "default" : "secondary"}
                   size="icon"
@@ -852,6 +1045,13 @@ export default function StudioPage() {
                   onClick={() => setShowSettings(!showSettings)}
                 >
                   <Settings className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={showChat ? "default" : "secondary"}
+                  size="icon"
+                  onClick={() => setShowChat(!showChat)}
+                >
+                  <MessageCircle className="h-4 w-4" />
                 </Button>
               </div>
               
@@ -891,45 +1091,181 @@ export default function StudioPage() {
               )}
             </div>
 
-            {/* Invite */}
+            {/* Stream Links */}
             <div className="bg-gray-700 rounded-lg p-4">
-              <h3 className="font-medium mb-3">Invite Co-hosts</h3>
-              <div className="flex gap-2">
-                <Input
-                  value={inviteLink}
-                  readOnly
-                  className="bg-gray-800 border-gray-600"
-                />
-                <Button
-                  size="icon"
-                  variant="secondary"
-                  onClick={copyInviteLink}
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
+              <h3 className="font-medium mb-3">Share Stream</h3>
+              <div className="space-y-2">
+                <div>
+                  <label className="text-xs text-gray-400 block mb-1">Viewer Link</label>
+                  <div className="flex gap-2">
+                    <Input
+                      value={`${window.location.origin}/stream/${streamId}`}
+                      readOnly
+                      className="bg-gray-800 border-gray-600 text-xs"
+                    />
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      onClick={copyViewerLink}
+                      className="shrink-0"
+                    >
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">Anyone can watch the stream with this link</p>
+                </div>
+                
+                {stream?.userId === session?.user?.id && (
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Host Invite Link</label>
+                    <div className="flex gap-2">
+                      <Input
+                        value={inviteLink || 'Generate an invite first'}
+                        readOnly
+                        className="bg-gray-800 border-gray-600 text-xs"
+                      />
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        onClick={() => copyInviteLink()}
+                        disabled={!inviteLink}
+                        className="shrink-0"
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">Secure link for co-hosts to join</p>
+                  </div>
+                )}
               </div>
-              <p className="text-sm text-gray-400 mt-2">
-                Share this link with people you want to join as co-hosts
-              </p>
             </div>
 
-            {/* Host List */}
-            <div className="bg-gray-700 rounded-lg p-4 flex-1">
-              <h3 className="font-medium mb-3">Current Hosts</h3>
-              <div className="space-y-2">
-                {hosts.map((host) => (
-                  <div key={host.id} className="flex items-center justify-between p-2 bg-gray-800 rounded">
-                    <div>
-                      <p className="font-medium">{host.user.name}</p>
-                      <p className="text-xs text-gray-400">{host.role}</p>
-                    </div>
-                    {host.user.id === session?.user?.id && (
-                      <span className="text-xs bg-blue-600 px-2 py-1 rounded">You</span>
-                    )}
+            {/* Invite Management */}
+            {stream?.userId === session?.user?.id && (
+              <div className="bg-gray-700 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-medium">Host Invites</h3>
+                  <Button
+                    size="sm"
+                    onClick={() => createHostInvite()}
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    <Plus className="h-4 w-4 mr-1" />
+                    Create
+                  </Button>
+                </div>
+                
+                {hostInvites.length > 0 ? (
+                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                    {hostInvites.slice(0, 3).map((invite) => (
+                      <div key={invite.id} className="bg-gray-800 rounded p-2 flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 text-xs">
+                            <span className={`px-2 py-1 rounded text-xs ${
+                              !invite.isActive || isInviteExpired(invite) || isInviteExhausted(invite)
+                                ? 'bg-red-600 text-white'
+                                : 'bg-green-600 text-white'
+                            }`}>
+                              {!invite.isActive ? 'Revoked' :
+                               isInviteExpired(invite) ? 'Expired' :
+                               isInviteExhausted(invite) ? 'Used Up' : 'Active'}
+                            </span>
+                            <span className="text-gray-400">
+                              {invite.usedCount}/{invite.maxUses}
+                            </span>
+                          </div>
+                          {invite.expiresAt && (
+                            <div className="text-xs text-gray-400 mt-1">
+                              Expires: {formatTime(invite.expiresAt)}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex gap-1">
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-6 w-6"
+                            onClick={() => copyInviteLink(invite.inviteUrl)}
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-6 w-6 text-red-400 hover:text-red-300"
+                            onClick={() => revokeHostInvite(invite.id)}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <p className="text-sm text-gray-400">
+                    No active invites. Create one to invite co-hosts.
+                  </p>
+                )}
               </div>
-            </div>
+            )}
+
+            {/* Chat Panel */}
+            {showChat && (
+              <div className="bg-gray-700 rounded-lg p-4 flex-1 min-h-0">
+                <h3 className="font-medium mb-3">Live Chat</h3>
+                <div className="bg-gray-800 rounded h-48 p-2 overflow-y-auto">
+                  <div className="text-center text-gray-400 text-sm">
+                    Chat messages will appear here...
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-2">
+                  <Input
+                    placeholder="Type a message..."
+                    className="bg-gray-800 border-gray-600 text-sm"
+                  />
+                  <Button size="sm" variant="secondary">
+                    Send
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Host List */}
+            {!showChat && (
+              <div className="bg-gray-700 rounded-lg p-4 flex-1">
+                <h3 className="font-medium mb-3">Current Hosts</h3>
+                <div className="space-y-2">
+                  {hosts.map((host) => (
+                    <div key={host.id} className="flex items-center justify-between p-2 bg-gray-800 rounded">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{host.user.name}</p>
+                        <p className="text-xs text-gray-400">{host.role}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {host.user.id === session?.user?.id ? (
+                          <span className="text-xs bg-blue-600 px-2 py-1 rounded">You</span>
+                        ) : stream?.userId === session?.user?.id ? (
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            className="h-6 w-6 text-red-400 hover:text-red-300"
+                            onClick={() => kickHost(host.id, host.user.name)}
+                            title="Remove host"
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        ) : null}
+                      </div>
+                    </div>
+                  ))}
+                  {hosts.length === 0 && (
+                    <p className="text-sm text-gray-400 text-center py-4">
+                      No hosts yet. Create an invite to add co-hosts.
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
