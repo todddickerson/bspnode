@@ -31,7 +31,10 @@ export function useSupabaseChat(streamId: string) {
   const channelRef = useRef<RealtimeChannel | null>(null)
 
   useEffect(() => {
-    if (!streamId) return
+    if (!streamId || !supabase) {
+      setLoading(false)
+      return
+    }
 
     // Load initial messages
     const loadMessages = async () => {
@@ -77,7 +80,7 @@ export function useSupabaseChat(streamId: string) {
   }, [streamId])
 
   const sendMessage = useCallback(async (content: string) => {
-    if (!session?.user || !content.trim()) return
+    if (!session?.user || !content.trim() || !supabase) return false
 
     const message = {
       stream_id: streamId,
@@ -109,7 +112,7 @@ export function useSupabasePresence(streamId: string, isHost: boolean = false) {
   const heartbeatIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    if (!streamId) return
+    if (!streamId || !supabase) return
 
     const userId = session?.user?.id || `viewer-${Date.now()}`
     const userName = session?.user?.name || 'Anonymous'
@@ -181,7 +184,7 @@ export function useSupabaseStreamStats(streamId: string) {
   const channelRef = useRef<RealtimeChannel | null>(null)
 
   useEffect(() => {
-    if (!streamId) return
+    if (!streamId || !supabase) return
 
     // Load initial stats
     const loadStats = async () => {
@@ -245,6 +248,8 @@ async function updatePresenceInDB(
   userName: string, 
   isHost: boolean
 ) {
+  if (!supabase) return
+  
   const { error } = await supabase
     .from('stream_presence')
     .upsert({

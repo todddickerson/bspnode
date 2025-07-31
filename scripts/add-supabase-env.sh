@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Add Supabase environment variables to .env.local
+
+cat >> .env.local << 'EOF'
+
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://pdgqkfmghtvfubffzctq.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZ3FrZm1naHR2ZnViZmZ6Y3RxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5NzY4MTYsImV4cCI6MjA2OTU1MjgxNn0.lcvEkojCCqyCunOCQC9qwS8OeEq2KMmf7PyLVBo42Lo
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBkZ3FrZm1naHR2ZnViZmZ6Y3RxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1Mzk3NjgxNiwiZXhwIjoyMDY5NTUyODE2fQ.f29K060dBUYMwjtsMtaXrQeOQDuRknZYSyjhbrzQUQE
+SUPABASE_JWT_SECRET=o0VBjbPMkhCPbj/hwdto5IhkSSPWL9zGS1TJ/erOxt8JYFAAsdnRvJ6VIQhhPcrsbLuYda7Nwl6psgj4I15OcA==
+SUPABASE_DATABASE_PASSWORD=P%a&@TnVFwXH9XMx
+EOF
+
+echo "✅ Supabase environment variables added to .env.local"

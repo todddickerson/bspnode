@@ -6,13 +6,20 @@
 
 ## Active Issues & TODOs
 
-### 1. **Supabase Integration** 🔴 IN PROGRESS
-- **Status**: Supabase keys added to .env.local by user
+### 1. **Supabase Integration** 🔴 NEEDS MANUAL SETUP
+- **Status**: Supabase connected but tables need to be created
 - **Progress**: 
   - ✅ Installed @supabase/supabase-js
   - ✅ Created lib/supabase.ts client configuration
   - ✅ Updated .env.example with Supabase variables
-- **Next Steps**: Migrate real-time features from Socket.io to Supabase
+  - ✅ Supabase keys added to .env.local
+  - ✅ Created migration SQL files
+  - ✅ Migrated viewer and studio pages to use Supabase
+- **Action Required**: 
+  1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
+  2. Select your project (pdgqkfmghtvfubffzctq)
+  3. Go to SQL Editor
+  4. Run the SQL from `supabase/migrations/002_simplified_schema.sql`
 
 ### 2. **Multi-Host Display Layouts** 🟢 FEATURE REQUEST
 - **Description**: Allow hosts to choose different display layouts for multi-host streams

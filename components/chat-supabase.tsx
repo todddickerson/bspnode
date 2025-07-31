@@ -16,6 +16,9 @@ export function ChatSupabase({ streamId }: ChatProps) {
   const [inputMessage, setInputMessage] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { messages, loading, sendMessage } = useSupabaseChat(streamId)
+  
+  // If Supabase is not available, show a fallback
+  const [supabaseAvailable, setSupabaseAvailable] = useState(true)
 
   useEffect(() => {
     scrollToBottom()
