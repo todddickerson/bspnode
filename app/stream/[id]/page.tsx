@@ -2,12 +2,14 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { VideoPlayer } from '@/components/video-player'
 import { Chat } from '@/components/chat'
 import { FloatingHearts } from '@/components/floating-hearts'
 import { Users, Heart, Maximize2, Signal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Room, RoomEvent, RemoteParticipant, RemoteTrackPublication, RemoteTrack, Track } from 'livekit-client'
+import { getSocket } from '@/lib/socket'
 
 interface Stream {
   id: string
@@ -33,6 +35,7 @@ interface Stream {
 export default function StreamViewerPage() {
   const params = useParams()
   const streamId = params.id as string
+  const { data: session } = useSession()
   const [stream, setStream] = useState<Stream | null>(null)
   const [loading, setLoading] = useState(true)
   const [heartTrigger, setHeartTrigger] = useState(0)
@@ -43,14 +46,44 @@ export default function StreamViewerPage() {
   const [remoteParticipants, setRemoteParticipants] = useState<Map<string, RemoteParticipant>>(new Map())
   const videoContainerRef = useRef<HTMLDivElement>(null)
   const liveKitVideoRef = useRef<HTMLVideoElement>(null)
+  const socketRef = useRef<any>(null)
 
   useEffect(() => {
     fetchStream()
     // Refresh stream data more frequently when waiting for video
     const refreshInterval = stream?.status === 'LIVE' && !stream?.muxPlaybackId ? 2000 : 10000
     const interval = setInterval(fetchStream, refreshInterval)
-    return () => clearInterval(interval)
-  }, [streamId, stream?.status, stream?.muxPlaybackId])
+    
+    // Connect to Socket.io for real-time updates
+    const socket = getSocket()
+    socketRef.current = socket
+    
+    socket.connect()
+    socket.emit('join-stream', { 
+      streamId, 
+      userId: session?.user?.id || `viewer-${Date.now()}`,
+      isHost: false 
+    })
+    
+    // Listen for viewer count updates
+    socket.on('viewer-count', (count: number) => {
+      setViewerCount(count)
+    })
+    
+    // Listen for heart reactions from others
+    socket.on('heart-sent', ({ total }) => {
+      // Could show total hearts or just trigger animation
+      setHeartTrigger(prev => prev + 1)
+    })
+    
+    return () => {
+      clearInterval(interval)
+      if (socketRef.current) {
+        socketRef.current.emit('leave-stream', { streamId })
+        socketRef.current.disconnect()
+      }
+    }
+  }, [streamId, stream?.status, stream?.muxPlaybackId, session?.user?.id])
 
   useEffect(() => {
     // Update stream duration every second if live
@@ -94,7 +127,10 @@ export default function StreamViewerPage() {
 
   const handleHeartClick = () => {
     setHeartTrigger(prev => prev + 1)
-    // TODO: Send heart event to server via Socket.io
+    // Send heart event via Socket.io
+    if (socketRef.current) {
+      socketRef.current.emit('send-heart', { streamId })
+    }
   }
 
   const toggleFullscreen = () => {
@@ -347,7 +383,7 @@ export default function StreamViewerPage() {
                   
                   <div className="flex items-center gap-1 text-gray-600">
                     <Users className="h-4 w-4" />
-                    <span>{stream.viewerCount} viewers</span>
+                    <span>{viewerCount || stream.viewerCount} viewers</span>
                   </div>
                 </div>
                 

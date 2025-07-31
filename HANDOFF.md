@@ -2,36 +2,33 @@
 
 ## Current Session Summary
 **Date**: January 31, 2025
-**Last Commit**: b9195a4 - Add device preferences and improve viewer experience
+**Last Update**: Socket.io chat integration fixes + Supabase setup
 
 ## Active Issues & TODOs
 
-### 1. **Host Invite Creation Error** 🔴 HIGH PRIORITY
-- **Issue**: "Failed to create invite" error when clicking Create button
-- **Root Cause**: Prisma client needs regeneration after HostInvite model was added
-- **Solution**: Server restart required (npm run dev)
-- **Status**: Fixed in code, awaiting server restart
+### 1. **Supabase Integration** 🔴 IN PROGRESS
+- **Status**: Supabase keys added to .env.local by user
+- **Progress**: 
+  - ✅ Installed @supabase/supabase-js
+  - ✅ Created lib/supabase.ts client configuration
+  - ✅ Updated .env.example with Supabase variables
+- **Next Steps**: Migrate real-time features from Socket.io to Supabase
 
-### 2. **Real-time Viewer Stats** 🟡 MEDIUM
-- **Issue**: Viewer count and heart reactions not updating in real-time
-- **Implementation**: Socket.io listeners added in studio page
-- **Missing**: Server-side Socket.io handlers in /api/socket need implementation
-- **Files**: 
-  - `/app/stream/[id]/studio/page.tsx` - Client listeners added
-  - `/server.js` - May need Socket.io event handlers
-
-### 3. **Multi-Host Display Layouts** 🟢 FEATURE REQUEST
+### 2. **Multi-Host Display Layouts** 🟢 FEATURE REQUEST
 - **Description**: Allow hosts to choose different display layouts for multi-host streams
 - **Options**: Grid view, Speaker focus, Picture-in-Picture, etc.
 - **Reference**: Use LiveKit's layout options (check with context7 MCP)
 - **Status**: TODO - Not started
 
-### 4. **Chat Message Persistence** 🟡 MEDIUM
-- **Issue**: Chat messages are not persisted to database
-- **Current**: Messages only exist in memory during stream
-- **Need**: Save messages to database and load history when joining
-
 ## Recent Changes Completed
+
+### ✅ Socket.io Real-time Features
+- Fixed chat message format mismatch between client and server
+- Implemented viewer count tracking (excluding hosts)
+- Added heart reaction events
+- Chat messages now persist to database
+- Message history loads when joining stream
+- Updated chat component to use correct Socket.io events
 
 ### ✅ Secure Host Invites
 - Implemented token-based invite system

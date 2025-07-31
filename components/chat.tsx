@@ -33,31 +33,49 @@ export function Chat({ streamId }: ChatProps) {
       socket.connect()
     }
 
-    socket.emit('join-stream', streamId)
+    socket.emit('join-stream', { streamId, userId: session?.user?.id || `viewer-${Date.now()}`, isHost: false })
 
     // Load chat history
     loadChatHistory()
 
-    socket.on('new-message', (message: Message) => {
-      setMessages((prev) => [...prev, message])
+    socket.on('chat-message', (message: any) => {
+      const formattedMessage: Message = {
+        id: message.id,
+        content: message.message,
+        user: {
+          name: message.userName,
+          id: message.userId
+        },
+        createdAt: message.timestamp
+      }
+      setMessages((prev) => [...prev, formattedMessage])
     })
+    
+    socket.on('messages-history', (history: any[]) => {
+      const formattedHistory = history.map(msg => ({
+        id: msg.id,
+        content: msg.message,
+        user: {
+          name: msg.userName,
+          id: msg.userId
+        },
+        createdAt: msg.timestamp
+      }))
+      setMessages(formattedHistory)
+    })
+    
+    // Request message history
+    socket.emit('get-messages', { streamId })
 
     return () => {
-      socket.off('new-message')
-      socket.emit('leave-stream', streamId)
+      socket.off('chat-message')
+      socket.off('messages-history')
+      socket.emit('leave-stream', { streamId })
     }
-  }, [streamId, socket])
+  }, [streamId, socket, session?.user?.id])
 
   const loadChatHistory = async () => {
-    try {
-      const response = await fetch(`/api/streams/${streamId}/messages`)
-      if (response.ok) {
-        const historyMessages = await response.json()
-        setMessages(historyMessages)
-      }
-    } catch (error) {
-      console.error('Error loading chat history:', error)
-    }
+    // Message history is now loaded via Socket.io
   }
 
   useEffect(() => {
@@ -73,12 +91,8 @@ export function Chat({ streamId }: ChatProps) {
     if (!inputMessage.trim() || !session?.user) return
 
     socket.emit('send-message', {
-      content: inputMessage,
-      streamId,
-      user: {
-        id: session.user.id,
-        name: session.user.name || 'Anonymous'
-      }
+      message: inputMessage,
+      streamId
     })
 
     setInputMessage('')
