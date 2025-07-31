@@ -9,7 +9,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { 
   Video, VideoOff, Mic, MicOff, Radio, Square, Loader2, 
   Users, Copy, Share2, Settings, Phone, PhoneOff, Plus, X, Heart, MessageCircle,
-  Eye, Clock, Trash2 
+  Eye, Clock, Trash2, Send 
 } from 'lucide-react'
 import {
   Room,
@@ -22,6 +22,7 @@ import {
   VideoPresets,
   LocalTrackPublication,
 } from 'livekit-client'
+import { getSocket } from '@/lib/socket'
 
 interface Stream {
   id: string
@@ -65,6 +66,14 @@ interface HostInvite {
   createdAt: string
 }
 
+interface ChatMessage {
+  id: string
+  message: string
+  userId: string
+  userName: string
+  timestamp: Date
+}
+
 export default function StudioPage() {
   const params = useParams()
   const streamId = params.id as string
@@ -96,6 +105,10 @@ export default function StudioPage() {
   const [showChat, setShowChat] = useState(false)
   const [viewerCount, setViewerCount] = useState(0)
   const [heartCount, setHeartCount] = useState(0)
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([])
+  const [chatInput, setChatInput] = useState('')
+  const socketRef = useRef<any>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   
   const localVideoRef = useRef<HTMLVideoElement>(null)
   const remoteVideoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({})
@@ -105,8 +118,41 @@ export default function StudioPage() {
     fetchStreamAndHosts()
     fetchHostInvites()
     initializePreview()
+    
+    // Initialize Socket.io for chat and real-time updates
+    const socket = getSocket()
+    socketRef.current = socket
+    
+    socket.connect()
+    socket.emit('join-stream', { streamId, userId: session?.user?.id, isHost: true })
+    
+    // Listen for chat messages
+    socket.on('chat-message', (message: ChatMessage) => {
+      setChatMessages(prev => [...prev, message])
+      // Auto-scroll to bottom
+      setTimeout(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+        }
+      }, 100)
+    })
+    
+    // Listen for viewer count updates
+    socket.on('viewer-count', (count: number) => {
+      setViewerCount(count)
+    })
+    
+    // Listen for heart events
+    socket.on('heart-sent', () => {
+      setHeartCount(prev => prev + 1)
+    })
+    
     return () => {
       stopPreview()
+      if (socketRef.current) {
+        socketRef.current.emit('leave-stream', { streamId })
+        socketRef.current.disconnect()
+      }
     }
   }, [streamId])
 
@@ -292,9 +338,16 @@ export default function StudioPage() {
     let newRoom: Room | null = null
     
     try {
-      // Always try to start/initialize the stream first
-      // This ensures the LiveKit room exists
-      const initResponse = await fetch(`/api/streams/${streamId}/start`, {
+      // Check if stream is already live
+      const streamStatus = await fetch(`/api/streams/${streamId}`)
+      const streamData = await streamStatus.json()
+      
+      // Only initialize if not already live, otherwise just get token
+      const endpoint = streamData.status === 'LIVE' 
+        ? `/api/streams/${streamId}/token` 
+        : `/api/streams/${streamId}/start`
+      
+      const initResponse = await fetch(endpoint, {
         method: 'POST',
       })
       
@@ -585,6 +638,27 @@ export default function StudioPage() {
         variant: 'destructive',
       })
     }
+  }
+
+  const sendChatMessage = () => {
+    if (!chatInput.trim() || !socketRef.current || !session?.user) return
+    
+    const message: ChatMessage = {
+      id: Date.now().toString(),
+      message: chatInput.trim(),
+      userId: session.user.id,
+      userName: session.user.name || 'Host',
+      timestamp: new Date(),
+    }
+    
+    // Send via Socket.io
+    socketRef.current.emit('send-message', {
+      streamId,
+      message: message.message,
+    })
+    
+    // Clear input
+    setChatInput('')
   }
 
   const stopBroadcast = async () => {
@@ -908,7 +982,7 @@ export default function StudioPage() {
         {/* Main Content */}
         <div className="flex-1 flex">
           {/* Video Grid */}
-          <div className="flex-1 p-4">
+          <div className={`flex-1 p-4 transition-all duration-300 ${showChat ? 'pr-0' : ''}`}>
             <div className="grid grid-cols-2 gap-4 h-full">
               {/* Local Video */}
               <div className="bg-gray-800 rounded-lg overflow-hidden relative aspect-video" data-testid="video-container">
@@ -987,7 +1061,7 @@ export default function StudioPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="w-80 bg-gray-800 p-4 flex flex-col gap-4">
+          <div className="w-80 bg-gray-800 p-4 flex flex-col gap-4 overflow-y-auto">
             {/* Stream Stats */}
             {isLive && (
               <div className="bg-gray-700 rounded-lg p-4">
@@ -1209,31 +1283,9 @@ export default function StudioPage() {
               </div>
             )}
 
-            {/* Chat Panel */}
-            {showChat && (
-              <div className="bg-gray-700 rounded-lg p-4 flex-1 min-h-0">
-                <h3 className="font-medium mb-3">Live Chat</h3>
-                <div className="bg-gray-800 rounded h-48 p-2 overflow-y-auto">
-                  <div className="text-center text-gray-400 text-sm">
-                    Chat messages will appear here...
-                  </div>
-                </div>
-                <div className="flex gap-2 mt-2">
-                  <Input
-                    placeholder="Type a message..."
-                    className="bg-gray-800 border-gray-600 text-sm"
-                  />
-                  <Button size="sm" variant="secondary">
-                    Send
-                  </Button>
-                </div>
-              </div>
-            )}
-
             {/* Host List */}
-            {!showChat && (
-              <div className="bg-gray-700 rounded-lg p-4 flex-1">
-                <h3 className="font-medium mb-3">Current Hosts</h3>
+            <div className="bg-gray-700 rounded-lg p-4">
+              <h3 className="font-medium mb-3">Current Hosts</h3>
                 <div className="space-y-2">
                   {hosts.map((host) => (
                     <div key={host.id} className="flex items-center justify-between p-2 bg-gray-800 rounded">
@@ -1265,8 +1317,71 @@ export default function StudioPage() {
                   )}
                 </div>
               </div>
-            )}
           </div>
+          
+          {/* Chat Panel - Right Column */}
+          {showChat && (
+            <div className="w-80 p-4 bg-gray-900 border-l border-gray-800 flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-white">Live Chat</h3>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => setShowChat(false)}
+                  className="h-8 w-8 text-gray-400 hover:text-white"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <div className="flex-1 bg-gray-800 rounded-lg p-4 mb-4 overflow-y-auto min-h-0" ref={chatContainerRef}>
+                <div className="space-y-3">
+                  {chatMessages.length === 0 ? (
+                    <div className="text-center text-gray-500 text-sm py-8">
+                      No messages yet. Start the conversation!
+                    </div>
+                  ) : (
+                    chatMessages.map((msg) => (
+                      <div key={msg.id} className={`flex flex-col ${msg.userId === session?.user?.id ? 'items-end' : 'items-start'}`}>
+                        <div className={`max-w-[80%] rounded-lg px-3 py-2 ${
+                          msg.userId === session?.user?.id 
+                            ? 'bg-blue-600 text-white' 
+                            : 'bg-gray-700 text-gray-100'
+                        }`}>
+                          <p className="text-sm">{msg.message}</p>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {msg.userName} • {new Date(msg.timestamp).toLocaleTimeString()}
+                        </p>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Type a message..."
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      sendChatMessage()
+                    }
+                  }}
+                />
+                <Button 
+                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={sendChatMessage}
+                  disabled={!chatInput.trim()}
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
