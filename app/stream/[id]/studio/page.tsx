@@ -757,11 +757,19 @@ export default function StudioPage() {
       setVideoDevices(videoInputs)
       setAudioDevices(audioInputs)
       
-      // Set default selected devices
-      if (videoInputs.length > 0 && !selectedVideoDevice) {
+      // Load saved preferences or set defaults
+      const savedVideoDevice = localStorage.getItem('preferredVideoDevice')
+      const savedAudioDevice = localStorage.getItem('preferredAudioDevice')
+      
+      if (savedVideoDevice && videoInputs.some(d => d.deviceId === savedVideoDevice)) {
+        setSelectedVideoDevice(savedVideoDevice)
+      } else if (videoInputs.length > 0 && !selectedVideoDevice) {
         setSelectedVideoDevice(videoInputs[0].deviceId)
       }
-      if (audioInputs.length > 0 && !selectedAudioDevice) {
+      
+      if (savedAudioDevice && audioInputs.some(d => d.deviceId === savedAudioDevice)) {
+        setSelectedAudioDevice(savedAudioDevice)
+      } else if (audioInputs.length > 0 && !selectedAudioDevice) {
         setSelectedAudioDevice(audioInputs[0].deviceId)
       }
     } catch (error) {
@@ -826,6 +834,8 @@ export default function StudioPage() {
         }
       }
       
+      // Save preference to localStorage
+      localStorage.setItem('preferredVideoDevice', deviceId)
       setSelectedVideoDevice(deviceId)
       
       toast({
@@ -877,6 +887,8 @@ export default function StudioPage() {
         }
       }
       
+      // Save preference to localStorage
+      localStorage.setItem('preferredAudioDevice', deviceId)
       setSelectedAudioDevice(deviceId)
       
       toast({

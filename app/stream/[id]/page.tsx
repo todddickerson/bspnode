@@ -46,10 +46,11 @@ export default function StreamViewerPage() {
 
   useEffect(() => {
     fetchStream()
-    // Refresh stream data every 10 seconds for better real-time updates
-    const interval = setInterval(fetchStream, 10000)
+    // Refresh stream data more frequently when waiting for video
+    const refreshInterval = stream?.status === 'LIVE' && !stream?.muxPlaybackId ? 2000 : 10000
+    const interval = setInterval(fetchStream, refreshInterval)
     return () => clearInterval(interval)
-  }, [streamId])
+  }, [streamId, stream?.status, stream?.muxPlaybackId])
 
   useEffect(() => {
     // Update stream duration every second if live
@@ -171,6 +172,9 @@ export default function StreamViewerPage() {
   const isWaitingForStream = stream.status === 'CREATED' && (stream.streamType === 'BROWSER' || stream.streamType === 'LIVEKIT')
   const isLiveStream = stream.status === 'LIVE'
   const canShowVideo = (stream.muxPlaybackId && (isLiveStream || hasRecording)) || hasRecording
+  
+  // For LiveKit streams, check if egress has started
+  const isLiveKitStreamReady = stream.streamType === 'LIVEKIT' && stream.status === 'LIVE' && stream.muxPlaybackId
 
   // For browser streams that are live but don't have muxPlaybackId yet
   const isBrowserStreamLive = stream.streamType === 'BROWSER' && stream.status === 'LIVE'
@@ -265,8 +269,12 @@ export default function StreamViewerPage() {
               ) : stream.status === 'LIVE' && !stream.muxPlaybackId ? (
                 <div className="w-full h-full bg-gray-900 flex items-center justify-center">
                   <div className="text-center text-white">
-                    <h2 className="text-2xl font-bold mb-2">Stream is Live</h2>
-                    <p className="text-gray-300">The broadcaster is setting up. Video will appear shortly.</p>
+                    <div className="animate-pulse mb-4">
+                      <Signal className="h-12 w-12 mx-auto text-gray-400" />
+                    </div>
+                    <h2 className="text-2xl font-bold mb-2">Connecting to Stream</h2>
+                    <p className="text-gray-300">The video will appear in a moment...</p>
+                    <p className="text-gray-500 text-sm mt-2">Stream is live, setting up video feed</p>
                   </div>
                 </div>
               ) : (

@@ -656,3 +656,118 @@ User NPifV1RhPYS3Fgy3AAAR left stream cmdrit2xo000lg340kzx83egw
  ✓ Compiled in 207ms (1031 modules)
  ✓ Compiled in 209ms (1031 modules)
  ✓ Compiled in 341ms (1031 modules)
+User disconnected: OD1F2pHBs3u7SoLyAAAP
+User disconnected: NPifV1RhPYS3Fgy3AAAR
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 817ms (1152 modules)
+ ✓ Compiled (1154 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+User connected: lhNE8BTS81lEhA-UAAAU
+User lhNE8BTS81lEhA-UAAAU joined stream [object Object]
+ ✓ Compiled /api/streams/[id]/invites in 80ms (1156 modules)
+User lhNE8BTS81lEhA-UAAAU left stream [object Object]
+User lhNE8BTS81lEhA-UAAAU joined stream [object Object]
+ ✓ Compiled (1158 modules)
+Error fetching invites: TypeError: Cannot read properties of undefined (reading 'findMany')
+    at GET (webpack-internal:///(rsc)/./app/api/streams/[id]/invites/route.ts:58:90)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+Error fetching invites: TypeError: Cannot read properties of undefined (reading 'findMany')
+    at GET (webpack-internal:///(rsc)/./app/api/streams/[id]/invites/route.ts:58:90)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+ ✓ Compiled /api/streams/[id]/hosts in 145ms (1160 modules)
+ ✓ Compiled /api/streams/[id]/start in 91ms (1165 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: OWZyHGGct9NABUjYJabo1jZIsxO01pEII00nwHQfXTICM
+ ✓ Compiled /api/streams/[id]/token in 96ms (1167 modules)
+Error creating invite: TypeError: Cannot read properties of undefined (reading 'create')
+    at POST (webpack-internal:///(rsc)/./app/api/streams/[id]/invites/route.ts:141:89)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+Error creating invite: TypeError: Cannot read properties of undefined (reading 'create')
+    at POST (webpack-internal:///(rsc)/./app/api/streams/[id]/invites/route.ts:141:89)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+User connected: wBp5UgtqGEw8gnHSAAAW
+User wBp5UgtqGEw8gnHSAAAW joined stream cmdrjsfus000pg340q7r737r2
+User wBp5UgtqGEw8gnHSAAAW left stream cmdrjsfus000pg340q7r737r2
+User wBp5UgtqGEw8gnHSAAAW joined stream cmdrjsfus000pg340q7r737r2
+ ✓ Compiled /api/streams/[id]/messages in 187ms (778 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 175ms (1160 modules)
+RTMP egress started: {
+  egressId: 'EG_JXaFWXMEyZbx',
+  roomName: 'cmdrjsfus000pg340q7r737r2',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+User disconnected: wBp5UgtqGEw8gnHSAAAW
+User connected: syOK1fyWhEysX528AAAY
+User syOK1fyWhEysX528AAAY joined stream cmdrjsfus000pg340q7r737r2
+User syOK1fyWhEysX528AAAY left stream cmdrjsfus000pg340q7r737r2
+User syOK1fyWhEysX528AAAY joined stream cmdrjsfus000pg340q7r737r2
+ ✓ Compiled in 468ms (1643 modules)
+User disconnected: syOK1fyWhEysX528AAAY
+ ✓ Compiled in 579ms (1033 modules)
