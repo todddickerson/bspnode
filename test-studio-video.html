@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Studio Video Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            aspect-ratio: 16/9;
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            background: #222;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Studio Video Test</h1>
+        <p>This tests the same video setup as the studio page</p>
+        
+        <div class="video-container" data-testid="video-container">
+            <video id="localVideo" autoplay playsinline muted></video>
+        </div>
+        
+        <div class="controls">
+            <button onclick="initializePreview()">Initialize Camera</button>
+            <button onclick="stopPreview()">Stop Camera</button>
+        </div>
+        
+        <div class="status" id="status">
+            Status: Not initialized
+        </div>
+    </div>
+    
+    <script>
+        let stream = null;
+        const video = document.getElementById('localVideo');
+        const status = document.getElementById('status');
+        
+        async function initializePreview() {
+            try {
+                status.textContent = 'Status: Requesting camera access...';
+                
+                const constraints = {
+                    video: {
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
+                        facingMode: 'user'
+                    },
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    }
+                };
+                
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                
+                video.srcObject = stream;
+                
+                status.textContent = 'Status: Camera active';
+                
+                // Log video state
+                video.addEventListener('loadedmetadata', () => {
+                    console.log('Video metadata loaded');
+                    console.log('Video dimensions:', video.videoWidth, 'x', video.videoHeight);
+                });
+                
+                video.addEventListener('play', () => {
+                    console.log('Video playing');
+                });
+                
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                status.textContent = `Status: Error - ${error.message}`;
+            }
+        }
+        
+        function stopPreview() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+                video.srcObject = null;
+                status.textContent = 'Status: Camera stopped';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+
+> bspnode@0.1.0 dev
+> node server.js
+
+> Ready on http://localhost:3001
+ ○ Compiling / ...
+ ✓ Compiled / in 1713ms (637 modules)
+ ✓ Compiled in 139ms (321 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 411ms (549 modules)
+ ✓ Compiled /login in 172ms (877 modules)
+ ✓ Compiled /middleware in 155ms (172 modules)
+ ✓ Compiled /dashboard in 138ms (893 modules)
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 540ms (952 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /stream/[id]/studio in 428ms (1303 modules)
+ ✓ Compiled /api/streams/[id] in 77ms (969 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 85ms (971 modules)
+ ✓ Compiled /api/streams/[id]/start in 103ms (976 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: YAJdxdTCun1COUi501COCAb4zYTooXwi01grH013nsSTP4
+ ✓ Compiled /api/streams/[id]/token in 89ms (978 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 108ms (980 modules)
+RTMP egress started: {
+  egressId: 'EG_VpfRrLaECesW',
+  roomName: 'cmdqf4cbo000123obijrdlq7d',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+ ✓ Compiled in 337ms (1317 modules)
+ ✓ Compiled in 180ms (1317 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 48ms (375 modules)
+ ✓ Compiled (611 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 48ms (613 modules)
+ ✓ Compiled /api/streams in 75ms (971 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/start in 71ms (976 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: 2An5K2DyMbZB6MIeMWf01sI003Cnbn00NIPe00MhXjvElG8
+ ✓ Compiled /api/streams/[id]/token in 69ms (978 modules)
+ ✓ Compiled in 254ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: ItHJRKVnatOE1LLe00dxJS7Dh01tlmya710101GsYQZg5zU
+Creating LiveKit room...
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: kIYO5xi17pklA7YxXtuC6xeaoutQ3o8jLVkPEXb02sXo
+Live stream created: 01xssBNQyxuAr02v51o2nKRu42mQujATRrqEq3EDDOF7A
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: qelKOdrnB3eT85FGWR9O75zq9bqj8JWYRtaAHZtyyCo
+ ✓ Compiled in 333ms (1328 modules)
+ ✓ Compiled in 187ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: MBLdHmTVmCVU1jR4z9HqoD5HIAGoWI4LSFlL02mCbYxI
+ ✓ Compiled in 263ms (1328 modules)
+ ✓ Compiled in 147ms (693 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 220ms (585 modules)
+ ✓ Compiled /api/streams in 261ms (967 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id] in 84ms (969 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 160ms (971 modules)
+ ✓ Compiled /api/streams/[id]/start in 81ms (976 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: C3ZclmtFkDo201qQL01XmgmUrWTjZGi5hSvu1h2KnRLZU
+ ✓ Compiled /api/streams/[id]/token in 82ms (978 modules)
+ ✓ Compiled in 357ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: ViRHoGZ6P02rKf6f4O01K2qEszUuVGXz00UsfYOr7QBP7o
+LiveKit room cmdqd5kvo000lsrbl9n28jpzl not found, creating it
+ ✓ Compiled in 757ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: hZkgTV7RA31rDpdJ4gvQWiUZfnumT3bBZ6gsQAnhl5k
+ ✓ Compiled in 261ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: FcvHrckLdBdwJkuMIT1bmrb01bHYPWhG01W7JFPKl8Mnw
+ ✓ Compiled in 244ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: frGeO5p3UxASOYxTzRQbicbDWYzDNXm3GPrueN7zIbs
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: TPud2aRTQMpibM02vczOI9pzTCBwc7Bc00vcDhSi96dY4
+ ✓ Compiled in 368ms (1328 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/end in 318ms (973 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/start in 100ms (978 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: aHFeDNRQCKnknHmRNmE028dTV01QJOuXiEd00OhyVLd0278
+ ✓ Compiled /api/streams/[id]/token in 119ms (980 modules)
+ ✓ Compiled in 275ms (693 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 151ms (693 modules)
+ ✓ Compiled /api/streams/[id] in 36ms (375 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 61ms (611 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 192ms (613 modules)
+ ✓ Compiled /api/streams in 279ms (971 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 222ms (1321 modules)
+ ✓ Compiled in 272ms (1321 modules)
+ ✓ Compiled in 188ms (1321 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 377ms (693 modules)
+ ✓ Compiled /not-found in 136ms (684 modules)
+ ✓ Compiled in 213ms (698 modules)
+ ✓ Compiled /api/streams in 198ms (1306 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat '/Users/todddickerson/src/GitHub/bspnode/.next/server/app/api/auth'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/api/auth/[...nextauth]/route' in /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server for build dependencies doesn't lead to expected result '/Users/todddickerson/src/GitHub/bspnode/.next/server/app/api/auth/[...nextauth]/route.js', but to 'Error: Can't resolve '../../../../.next/server/app/api/auth/[...nextauth]/route' in '/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/api/auth/[...nextauth]/route (expected /Users/todddickerson/src/GitHub/bspnode/.next/server/app/api/auth/[...nextauth]/route.js)
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/require.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/require.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/load-components.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/load-components.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/utils.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/utils.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/entries.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/entries.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack/plugins/next-types-plugin/index.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack/plugins/next-types-plugin/index.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack-config.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack-config.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/handle-externals.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/handle-externals.js
+<w>  at file dependencies /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack/loaders/next-swc-loader.js
+<w>  at file /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack/loaders/next-swc-loader.js
+<w>  at resolve commonjs /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/build/webpack/loaders/next-swc-loader.js

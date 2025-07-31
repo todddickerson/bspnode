@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  streams       Stream[]
+  messages      Message[]
+  hostedStreams StreamHost[]
+}
+
+model Stream {
+  id            String    @id @default(cuid())
+  title         String
+  description   String?
+  status        StreamStatus @default(CREATED)
+  
+  // Streaming type
+  streamType    StreamType @default(RTMP)
+  
+  // Mux integration fields
+  muxPlaybackId String?
+  muxStreamKey  String?
+  muxAssetId    String?
+  muxStatus     String?     // Mux stream status (ACTIVE, IDLE, etc.)
+  rtmpConnectedAt DateTime?  // When RTMP connected to Mux
+  rtmpDisconnectedAt DateTime? // When RTMP disconnected from Mux
+  
+  // LiveKit integration fields
+  liveKitRoomName String?     // Unique room name for LiveKit
+  liveKitRoomId   String?     // LiveKit room ID
+  maxHosts        Int?    @default(4) // Maximum number of hosts allowed
+  egressId        String?     // LiveKit egress ID for RTMP streaming
+  egressStatus    String?     // Egress status (ACTIVE, ENDED, etc.)
+  egressError     String?     // Egress error message if any
+  
+  // Recording fields
+  recordingUrl    String?
+  recordingStatus RecordingStatus @default(NONE)
+  recordingId     String?     // Mux asset ID for recording
+  duration        Int?        // Duration in seconds
+  
+  // Stream metadata
+  startedAt     DateTime?
+  endedAt       DateTime?
+  viewerCount   Int       @default(0)
+  
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  messages      Message[]
+  hosts         StreamHost[]  // Hosts for collaborative streams
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([userId])
+  @@index([status])
+  @@index([streamType])
+}
+
+enum StreamStatus {
+  CREATED
+  LIVE
+  ENDED
+}
+
+enum StreamType {
+  RTMP     // Professional streaming via OBS
+  BROWSER  // Browser-based streaming
+  LIVEKIT  // Multi-host collaborative streaming
+}
+
+enum RecordingStatus {
+  NONE
+  RECORDING
+  UPLOADING
+  PROCESSING
+  READY
+  FAILED
+}
+
+model StreamHost {
+  id            String    @id @default(cuid())
+  role          HostRole  @default(HOST)
+  joinedAt      DateTime  @default(now())
+  leftAt        DateTime?
+  
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  streamId      String
+  stream        Stream    @relation(fields: [streamId], references: [id])
+  
+  @@unique([userId, streamId])
+  @@index([streamId])
+}
+
+enum HostRole {
+  OWNER    // Stream creator
+  HOST     // Co-host with full permissions
+  GUEST    // Limited permissions
+}
+
+model Message {
+  id            String    @id @default(cuid())
+  content       String
+  
+  // Relations
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  streamId      String
+  stream        Stream    @relation(fields: [streamId], references: [id])
+  
+  createdAt     DateTime  @default(now())
+  
+  @@index([streamId])
+  @@index([userId])
+}

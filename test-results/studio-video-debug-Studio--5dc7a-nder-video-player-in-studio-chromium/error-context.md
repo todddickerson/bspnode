@@ -1,0 +1,221 @@
+# Page snapshot
+
+```yaml
+- heading "Creator Dashboard" [level=1]
+- paragraph: Manage your streams
+- heading "Create New Stream" [level=2]
+- text: Stream Title
+- textbox "Stream Title"
+- text: Description (optional)
+- textbox "Description (optional)"
+- text: How do you want to stream?
+- button "Collaborative Stream Multiple hosts can join":
+  - img
+  - text: Collaborative Stream Multiple hosts can join
+- button "Solo Browser Stream Stream alone from browser":
+  - img
+  - text: Solo Browser Stream Stream alone from browser
+- button "Stream with OBS Professional software":
+  - img
+  - text: Stream with OBS Professional software
+- button "Create Stream"
+- button "Cancel"
+- heading "LiveKit Studio Test 1753903995993" [level=3]
+- paragraph: Testing LiveKit studio functionality
+- img
+- text: "Status: CREATED Type: Collaborative"
+- img
+- text: "Max Hosts: 4"
+- img
+- text: "Viewers: 0"
+- button "Enter Studio"
+- button "View Stream"
+- heading "UI Test Stream" [level=3]
+- paragraph: Testing broadcaster UI features
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Chat Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:43:24 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Live Test Stream" [level=3]
+- img
+- text: "Status: ENDED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:43:17 PM"
+- button "View Stream"
+- heading "Camera Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Chat Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:42:10 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Live Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:41:54 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Camera Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Chat Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:40:39 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Live Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:40:23 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Camera Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Chat Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:39:48 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Live Test Stream" [level=3]
+- img
+- text: "Status: ENDED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 7:39:41 PM"
+- button "View Stream"
+- heading "Camera Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Camera Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Chat Test Stream" [level=3]
+- img
+- text: "Status: LIVE Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- img
+- text: "Started: 7/29/2025, 4:33:18 PM"
+- button "End Stream"
+- button "View Stream"
+- heading "Live Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Camera Test Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- heading "Test Browser Stream" [level=3]
+- img
+- text: "Status: CREATED Type: Solo Browser"
+- img
+- text: "Viewers: 0"
+- button "Start Broadcasting"
+- button "View Stream"
+- region "Notifications (F8)":
+  - list
+- alert
+```

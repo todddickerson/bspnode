@@ -1,0 +1,62 @@
+
+> bspnode@0.1.0 dev
+> node server.js
+
+> Ready on http://localhost:3001
+ ○ Compiling / ...
+ ✓ Compiled / in 1772ms (637 modules)
+ ✓ Compiled in 135ms (321 modules)
+ ✓ Compiled /middleware in 177ms (172 modules)
+ ✓ Compiled /dashboard in 177ms (640 modules)
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 832ms (943 modules)
+ ✓ Compiled (945 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ○ Compiling /stream/[id]/studio ...
+ ✓ Compiled /stream/[id]/studio in 579ms (1292 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id] in 79ms (962 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 73ms (964 modules)
+ ✓ Compiled /api/streams/[id]/start in 169ms (969 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: mfGB01uMSII8015dJdF87aC6qp8vw02TMKSVKFz8ESMaEM
+ ✓ Compiled /api/streams/[id]/token in 96ms (971 modules)
+ ✓ Compiled in 309ms (1317 modules)
+ ✓ Compiled in 188ms (1286 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: 01roZ9SWXE7aQ433zWLJh02zImCQb8mKVD02GVts7WVmWk
+ ✓ Compiled in 360ms (1286 modules)
+ ✓ Compiled in 193ms (1286 modules)
+ ✓ Compiled in 322ms (1284 modules)
+ ✓ Compiled in 107ms (305 modules)
+ ✓ Compiled in 148ms (346 modules)
+ ✓ Compiled in 84ms (346 modules)
+ ✓ Compiled in 140ms (346 modules)
+ ✓ Compiled in 80ms (346 modules)
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 664ms (951 modules)
+ ✓ Compiled in 0ms (953 modules)
+ ✓ Compiled in 0ms (953 modules)
+ ✓ Compiled in 0ms (953 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id] in 135ms (955 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 64ms (957 modules)
+ ✓ Compiled /api/streams/[id]/start in 87ms (962 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: WBygcRSK00j3p3Ib1JjCRXkvS8C00cKLvb7mBW01q6j58o
+ ✓ Compiled /api/streams/[id]/token in 83ms (964 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 112ms (966 modules)
+RTMP egress started: {
+  egressId: 'EG_sZzSDYi4T36k',
+  roomName: 'cmdqmum1r0005g340kvv0okco',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
