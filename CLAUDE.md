@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Session Handoff Protocol
+
+When starting a new session:
+1. **Check for HANDOFF.md**: Look for a handoff file in the root directory
+2. **Review Status**: Read through active issues and TODOs
+3. **Verify Completed Items**: Test features marked as completed
+4. **Clean Up**: Remove items from HANDOFF.md that are verified working
+5. **Continue Work**: Pick up from where the previous session left off
+
+If HANDOFF.md exists but all items are completed, delete the file.
+
 ## Project Overview
 
 BSPNode is a Fireside Chat clone - an interactive streaming platform with live broadcasting and real-time chat. It's built as a monolithic Next.js application for MVP simplicity.
@@ -73,3 +84,6 @@ Required environment variables in `.env.local`:
 - Socket.io integration requires special handling in Next.js
 - Mux webhook endpoints needed for stream status updates
 - Check `docs/` directory for detailed implementation guides
+- Always run `npm run dev` after pulling changes to ensure Prisma client is updated
+- Device preferences are stored in localStorage
+- Host invites use secure tokens with expiration
