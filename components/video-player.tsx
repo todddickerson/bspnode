@@ -47,18 +47,29 @@ export function VideoPlayer({ playbackId, title, isLive = false }: VideoPlayerPr
           streamType={isLive ? "live" : "on-demand"}
           autoPlay
           muted
+          // Disable pause/play controls for live streams
+          paused={false}
+          // Hide play button and prevent spacebar pause for live streams
+          nohotkeys={isLive}
           style={{
             width: '100%',
             height: '100%',
             maxWidth: '100%',
+            // Prevent click-to-pause for live streams
+            pointerEvents: isLive ? 'none' : 'auto'
           }}
-          onError={() => setHasError(true)}
+          onError={(error) => {
+            console.error('MuxPlayer error:', error)
+            setHasError(true)
+          }}
+          onLoadStart={() => {
+            console.log('MuxPlayer: Load started for', playbackId)
+          }}
+          onCanPlay={() => {
+            console.log('MuxPlayer: Can play', playbackId)
+            setHasError(false)
+          }}
         />
-      )}
-      {isLive && !hasError && (
-        <div className="absolute top-4 left-4 bg-red-600 text-white px-2 py-1 rounded text-sm font-semibold">
-          LIVE
-        </div>
       )}
     </div>
   )

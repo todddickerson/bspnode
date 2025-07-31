@@ -30,9 +30,20 @@ export function ChatSupabase({ streamId }: ChatProps) {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!inputMessage.trim() || !session?.user) return
+    console.log('Attempting to send message:', {
+      message: inputMessage,
+      hasSession: !!session,
+      userId: session?.user?.id,
+      userName: session?.user?.name
+    })
+    
+    if (!inputMessage.trim() || !session?.user) {
+      console.log('Cannot send message - missing input or session')
+      return
+    }
 
     const success = await sendMessage(inputMessage)
+    console.log('Send message result:', success)
     if (success) {
       setInputMessage('')
     }

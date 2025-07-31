@@ -3,3 +3,62 @@
 > node server.js
 
 > Ready on http://localhost:3001
+ ○ Compiling /stream/[id]/studio ...
+ ✓ Compiled /stream/[id]/studio in 1767ms (791 modules)
+ ✓ Compiled in 144ms (390 modules)
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 954ms (433 modules)
+ ✓ Compiled (664 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 71ms (666 modules)
+ ✓ Compiled /middleware in 178ms (172 modules)
+ ✓ Compiled /dashboard in 181ms (1056 modules)
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 599ms (1054 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/end in 101ms (1056 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/start in 140ms (1061 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: q00EaquG02mYneF7bq1zv6EdqX787tZaNK3evE1Ppc42Q
+ ✓ Compiled /api/streams/[id]/token in 157ms (1063 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 98ms (1065 modules)
+RTMP egress started: {
+  egressId: 'EG_CEjfipL9h7mN',
+  roomName: 'cmdrmh55w000113go10lqmhrd',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+ ○ Compiling /stream/[id] ...
+ ✓ Compiled /stream/[id] in 1111ms (1639 modules)
+ ○ Compiling /api/streams/[id]/heart ...
+ ✓ Compiled /api/streams/[id]/heart in 598ms (1238 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: Jk8fBv9U6xyjJ8Soss00woZXAjhLkd8bA502QJZ4WFDBk
+RTMP egress started: {
+  egressId: 'EG_T2BgqrpNnSVd',
+  roomName: 'cmdrmtaa3000513gop4k60utm',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+ ✓ Compiled in 376ms (1653 modules)
+ ✓ Compiled in 0ms (1162 modules)
+ ✓ Compiled in 0ms (1162 modules)
+ ✓ Compiled in 0ms (1162 modules)
+ ✓ Compiled in 486ms (1639 modules)
+ ✓ Compiled /api/streams/[id]/heart in 395ms (1225 modules)
+ ✓ Compiled in 210ms (1716 modules)
+ ✓ Compiled in 203ms (1342 modules)
+ ✓ Compiled in 290ms (1113 modules)
+ ✓ Compiled in 0ms (622 modules)
+ ✓ Compiled in 1ms (622 modules)
+ ✓ Compiled in 1ms (622 modules)
+ ✓ Compiled in 189ms (1113 modules)
+ ✓ Compiled in 225ms (1113 modules)
+ ✓ Compiled in 154ms (1113 modules)
+ ✓ Compiled in 168ms (1113 modules)
+ ✓ Compiled in 140ms (1113 modules)

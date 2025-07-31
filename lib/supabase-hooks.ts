@@ -80,7 +80,17 @@ export function useSupabaseChat(streamId: string) {
   }, [streamId])
 
   const sendMessage = useCallback(async (content: string) => {
-    if (!session?.user || !content.trim() || !supabase) return false
+    console.log('Supabase sendMessage called:', {
+      hasSupabase: !!supabase,
+      hasSession: !!session?.user,
+      streamId,
+      content
+    })
+    
+    if (!session?.user || !content.trim() || !supabase) {
+      console.log('Supabase sendMessage failed preconditions')
+      return false
+    }
 
     const message = {
       stream_id: streamId,
@@ -89,15 +99,19 @@ export function useSupabaseChat(streamId: string) {
       content: content.trim()
     }
 
-    const { error } = await supabase
+    console.log('Inserting message to Supabase:', message)
+    
+    const { data, error } = await supabase
       .from('messages')
       .insert([message])
+      .select()
 
     if (error) {
       console.error('Error sending message:', error)
       return false
     }
 
+    console.log('Message inserted successfully:', data)
     return true
   }, [streamId, session])
 
