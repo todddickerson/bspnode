@@ -195,3 +195,25 @@ Presence sync
 ✅ Supabase client created successfully
 🔍 Getting messages for stream: test-stream-debug-fixed hasSupabase: true
 ✅ Messages retrieved: 3 messages
+ ✓ Compiled /api/auth/[...nextauth] in 190ms (751 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 455ms (1129 modules)
+ ✓ Compiled (1131 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ○ Compiling /stream/[id]/studio ...
+ ✓ Compiled /stream/[id]/studio in 593ms (1632 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 83ms (1154 modules)
+ ✓ Compiled (1156 modules)
+ ✓ Compiled /api/streams/[id]/start in 91ms (1161 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: QaqrZpXTsdnvIWA3nZEdDLWJxi02XHCqVlY6DLgEYA8g
+ ✓ Compiled /api/streams/[id]/token in 86ms (1163 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 450ms (1646 modules)
+ ✓ Compiled in 194ms (1037 modules)
+ ✓ Compiled in 219ms (1037 modules)
+ ✓ Compiled /api/streams in 86ms (1150 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/hosts in 313ms (1152 modules)
+ ✓ Compiled (1154 modules)

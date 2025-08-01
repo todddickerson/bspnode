@@ -157,6 +157,18 @@ export default function StudioPage() {
       setHasPermission(true)
       setPermissionError(null)
       
+      // Set initial camera/mic states based on stream tracks
+      const videoTrack = stream.getVideoTracks()[0]
+      const audioTrack = stream.getAudioTracks()[0]
+      if (videoTrack) {
+        setIsVideoEnabled(videoTrack.enabled)
+        setIsCameraOn(videoTrack.enabled)
+      }
+      if (audioTrack) {
+        setIsAudioEnabled(audioTrack.enabled)
+        setIsMicOn(audioTrack.enabled)
+      }
+      
       // Enumerate devices after getting permission
       await enumerateDevices()
     } catch (error: any) {
@@ -564,22 +576,56 @@ export default function StudioPage() {
   }
 
   const toggleVideo = async () => {
-    if (!streamRef.current) return
-    
-    const videoTrack = streamRef.current.getVideoTracks()[0]
-    if (videoTrack) {
-      videoTrack.enabled = !videoTrack.enabled
-      setIsVideoEnabled(videoTrack.enabled)
+    // If connected to LiveKit, use LiveKit controls
+    if (room && isConnected) {
+      try {
+        const enabled = !isCameraOn
+        await room.localParticipant.setCameraEnabled(enabled)
+        setIsCameraOn(enabled)
+        setIsVideoEnabled(enabled)
+      } catch (error) {
+        console.error('Error toggling camera:', error)
+        toast({
+          title: 'Error',
+          description: 'Failed to toggle camera',
+          variant: 'destructive',
+        })
+      }
+    } else if (streamRef.current) {
+      // Use local stream for preview
+      const videoTrack = streamRef.current.getVideoTracks()[0]
+      if (videoTrack) {
+        videoTrack.enabled = !videoTrack.enabled
+        setIsVideoEnabled(videoTrack.enabled)
+        setIsCameraOn(videoTrack.enabled)
+      }
     }
   }
 
   const toggleAudio = async () => {
-    if (!streamRef.current) return
-    
-    const audioTrack = streamRef.current.getAudioTracks()[0]
-    if (audioTrack) {
-      audioTrack.enabled = !audioTrack.enabled
-      setIsAudioEnabled(audioTrack.enabled)
+    // If connected to LiveKit, use LiveKit controls
+    if (room && isConnected) {
+      try {
+        const enabled = !isMicOn
+        await room.localParticipant.setMicrophoneEnabled(enabled)
+        setIsMicOn(enabled)
+        setIsAudioEnabled(enabled)
+      } catch (error) {
+        console.error('Error toggling microphone:', error)
+        toast({
+          title: 'Error',
+          description: 'Failed to toggle microphone',
+          variant: 'destructive',
+        })
+      }
+    } else if (streamRef.current) {
+      // Use local stream for preview
+      const audioTrack = streamRef.current.getAudioTracks()[0]
+      if (audioTrack) {
+        audioTrack.enabled = !audioTrack.enabled
+        setIsAudioEnabled(audioTrack.enabled)
+        setIsMicOn(audioTrack.enabled)
+      }
     }
   }
 
