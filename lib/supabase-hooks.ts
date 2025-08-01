@@ -31,13 +31,21 @@ export function useSupabaseChat(streamId: string) {
   const channelRef = useRef<RealtimeChannel | null>(null)
 
   useEffect(() => {
+    console.log('🔄 useSupabaseChat: Starting effect', {
+      streamId,
+      hasSupabase: !!supabase,
+      hasSession: !!session
+    })
+
     if (!streamId || !supabase) {
+      console.log('❌ useSupabaseChat: Missing streamId or supabase client')
       setLoading(false)
       return
     }
 
     // Load initial messages
     const loadMessages = async () => {
+      console.log('📥 Loading initial messages for stream:', streamId)
       const { data, error } = await supabase
         .from('messages')
         .select('*')
@@ -45,8 +53,11 @@ export function useSupabaseChat(streamId: string) {
         .order('created_at', { ascending: true })
         .limit(100)
 
-      if (!error && data) {
-        setMessages(data)
+      if (error) {
+        console.error('❌ Error loading messages:', error)
+      } else {
+        console.log('✅ Loaded messages:', data?.length || 0, 'messages')
+        setMessages(data || [])
       }
       setLoading(false)
     }
@@ -54,6 +65,7 @@ export function useSupabaseChat(streamId: string) {
     loadMessages()
 
     // Subscribe to new messages
+    console.log('🔌 Setting up real-time subscription for stream:', streamId)
     const channel = supabase
       .channel(`chat:${streamId}`)
       .on(
@@ -65,14 +77,44 @@ export function useSupabaseChat(streamId: string) {
           filter: `stream_id=eq.${streamId}`
         },
         (payload) => {
-          setMessages(current => [...current, payload.new as Message])
+          console.log('📨 Real-time message received:', payload)
+          console.log('📨 New message data:', payload.new)
+          setMessages(current => {
+            console.log('📨 Adding to current messages:', current.length, '+ 1')
+            return [...current, payload.new as Message]
+          })
         }
       )
-      .subscribe()
+      .subscribe((status, err) => {
+        console.log('🔌 Subscription status changed:', status)
+        if (err) {
+          console.error('❌ Subscription error:', err)
+        }
+        
+        // Additional debugging
+        if (status === 'SUBSCRIBED') {
+          console.log('✅ Successfully subscribed to real-time updates')
+          console.log('📡 Channel state:', channel.state)
+          console.log('📡 Channel topic:', channel.topic)
+          
+          // Test the connection with a ping
+          channel.send({
+            type: 'heartbeat',
+            event: '',
+            payload: {}
+          })
+        } else if (status === 'CLOSED') {
+          console.log('❌ Channel closed unexpectedly')
+          console.log('📡 Close reason:', (channel as any).closeReason)
+        } else if (status === 'CHANNEL_ERROR') {
+          console.log('❌ Channel error occurred')
+        }
+      })
 
     channelRef.current = channel
 
     return () => {
+      console.log('🧹 Cleaning up chat subscription')
       if (channelRef.current) {
         supabase.removeChannel(channelRef.current)
       }

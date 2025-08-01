@@ -3,62 +3,148 @@
 > node server.js
 
 > Ready on http://localhost:3001
- ○ Compiling /stream/[id]/studio ...
- ✓ Compiled /stream/[id]/studio in 1767ms (791 modules)
- ✓ Compiled in 144ms (390 modules)
- ○ Compiling /api/auth/[...nextauth] ...
- ✓ Compiled /api/auth/[...nextauth] in 954ms (433 modules)
- ✓ Compiled (664 modules)
- ✓ Compiled /api/streams/[id]/hosts in 71ms (666 modules)
- ✓ Compiled /middleware in 178ms (172 modules)
- ✓ Compiled /dashboard in 181ms (1056 modules)
- ○ Compiling /api/streams ...
- ✓ Compiled /api/streams in 599ms (1054 modules)
+ ○ Compiling /debug ...
+ ✓ Compiled /not-found in 1152ms (744 modules)
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /stream/[id] in 467ms (1108 modules)
+ ✓ Compiled /dashboard in 87ms (954 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ○ Compiling /api/streams/[id] ...
+ ✓ Compiled /api/streams/[id] in 582ms (1129 modules)
+ ✓ Compiled (1133 modules)
 Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
- ✓ Compiled /api/streams/[id]/end in 101ms (1056 modules)
-Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
- ✓ Compiled /api/streams/[id]/start in 140ms (1061 modules)
-Creating LiveKit room...
-Creating Mux live stream...
-Creating enhanced Mux live stream...
-Live stream created: q00EaquG02mYneF7bq1zv6EdqX787tZaNK3evE1Ppc42Q
- ✓ Compiled /api/streams/[id]/token in 157ms (1063 modules)
- ✓ Compiled /api/streams/[id]/egress/start in 98ms (1065 modules)
-RTMP egress started: {
-  egressId: 'EG_CEjfipL9h7mN',
-  roomName: 'cmdrmh55w000113go10lqmhrd',
-  layout: 'speaker',
-  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+ ✓ Compiled in 455ms (1609 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled in 89ms (476 modules)
+ ✓ Compiled in 256ms (1767 modules)
+ ✓ Compiled /api/debug/test-message in 184ms (1206 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+❌ Test message API error: SyntaxError: Bad escaped character in JSON at position 65
+    at JSON.parse (<anonymous>)
+    at parseJSONFromBytes (node:internal/deps/undici/undici:5738:19)
+    at successSteps (node:internal/deps/undici/undici:5719:27)
+    at fullyReadBody (node:internal/deps/undici/undici:4609:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async consumeBody (node:internal/deps/undici/undici:5728:7)
+    at async POST (webpack-internal:///(rsc)/./app/api/debug/test-message/route.ts:11:40)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1539:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+🧪 Test message API called: {
+  stream_id: 'test-stream-123',
+  content: 'Hello from API test',
+  hasSupabaseAdmin: true
 }
- ○ Compiling /stream/[id] ...
- ✓ Compiled /stream/[id] in 1111ms (1639 modules)
- ○ Compiling /api/streams/[id]/heart ...
- ✓ Compiled /api/streams/[id]/heart in 598ms (1238 modules)
-Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
-Creating LiveKit room...
-Creating Mux live stream...
-Creating enhanced Mux live stream...
-Live stream created: Jk8fBv9U6xyjJ8Soss00woZXAjhLkd8bA502QJZ4WFDBk
-RTMP egress started: {
-  egressId: 'EG_T2BgqrpNnSVd',
-  roomName: 'cmdrmtaa3000513gop4k60utm',
-  layout: 'speaker',
-  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+🧪 Inserting test message: {
+  stream_id: 'test-stream-123',
+  user_id: 'test-user',
+  user_name: 'Test User',
+  content: 'Hello from API test'
 }
- ✓ Compiled in 376ms (1653 modules)
- ✓ Compiled in 0ms (1162 modules)
- ✓ Compiled in 0ms (1162 modules)
- ✓ Compiled in 0ms (1162 modules)
- ✓ Compiled in 486ms (1639 modules)
- ✓ Compiled /api/streams/[id]/heart in 395ms (1225 modules)
- ✓ Compiled in 210ms (1716 modules)
- ✓ Compiled in 203ms (1342 modules)
- ✓ Compiled in 290ms (1113 modules)
- ✓ Compiled in 0ms (622 modules)
- ✓ Compiled in 1ms (622 modules)
- ✓ Compiled in 1ms (622 modules)
- ✓ Compiled in 189ms (1113 modules)
- ✓ Compiled in 225ms (1113 modules)
- ✓ Compiled in 154ms (1113 modules)
- ✓ Compiled in 168ms (1113 modules)
- ✓ Compiled in 140ms (1113 modules)
+✅ Test message inserted successfully: [
+  {
+    id: 'd81d8e9a-8875-43cc-be15-582c80ca203f',
+    stream_id: 'test-stream-123',
+    user_id: 'test-user',
+    user_name: 'Test User',
+    content: 'Hello from API test',
+    created_at: '2025-08-01T12:22:34.12989+00:00',
+    updated_at: '2025-08-01T12:22:34.12989+00:00'
+  }
+]
+ ✓ Compiled in 195ms (1079 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🧪 Test message API called: {
+  stream_id: 'test-stream-debug-fixed',
+  content: 'Real-time test message #1',
+  hasSupabaseAdmin: true
+}
+🧪 Inserting test message: {
+  stream_id: 'test-stream-debug-fixed',
+  user_id: 'test-user',
+  user_name: 'Test User',
+  content: 'Real-time test message #1'
+}
+✅ Test message inserted successfully: [
+  {
+    id: 'ff48f865-8014-451e-9cf4-16ea9295384c',
+    stream_id: 'test-stream-debug-fixed',
+    user_id: 'test-user',
+    user_name: 'Test User',
+    content: 'Real-time test message #1',
+    created_at: '2025-08-01T12:22:47.473296+00:00',
+    updated_at: '2025-08-01T12:22:47.473296+00:00'
+  }
+]
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🧪 Test message API called: {
+  stream_id: 'test-stream-debug-fixed',
+  content: 'Real-time test message #2 - after page load',
+  hasSupabaseAdmin: true
+}
+🧪 Inserting test message: {
+  stream_id: 'test-stream-debug-fixed',
+  user_id: 'test-user',
+  user_name: 'Test User',
+  content: 'Real-time test message #2 - after page load'
+}
+✅ Test message inserted successfully: [
+  {
+    id: '18cca6d5-8957-4090-9143-5e948347f8a6',
+    stream_id: 'test-stream-debug-fixed',
+    user_id: 'test-user',
+    user_name: 'Test User',
+    content: 'Real-time test message #2 - after page load',
+    created_at: '2025-08-01T12:22:57.539202+00:00',
+    updated_at: '2025-08-01T12:22:57.539202+00:00'
+  }
+]
+ ✓ Compiled in 93ms (474 modules)
+ ✓ Compiled in 157ms (1237 modules)
+ ✓ Compiled /api/debug/get-messages in 60ms (607 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔍 Getting messages for stream: test-stream-debug-fixed hasSupabase: true
+✅ Messages retrieved: 2 messages
+ ✓ Compiled in 107ms (474 modules)
+ ✓ Compiled in 196ms (1239 modules)
+ ✓ Compiled /api/debug/test-realtime in 53ms (609 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🧪 Testing real-time subscription server-side
+🔌 Server-side subscription status: SUBSCRIBED
+🔌 Server-side subscription status: CLOSED
+ ✓ Compiled in 440ms (977 modules)
+ ✓ Compiled in 143ms (977 modules)
+ ✓ Compiled in 92ms (474 modules)
+ ✓ Compiled in 196ms (1163 modules)
+ ✓ Compiled /api/debug/check-supabase in 43ms (519 modules)
+ ✓ Compiled in 125ms (474 modules)
+ ✓ Compiled in 90ms (475 modules)
+ ✓ Compiled in 87ms (475 modules)
+ ✓ Compiled /debug in 154ms (522 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
