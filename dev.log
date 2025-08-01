@@ -148,3 +148,50 @@ Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tok
  ✓ Compiled /debug in 154ms (522 modules)
 🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
 ✅ Supabase client created successfully
+ ✓ Compiled /api/auth/[...nextauth] in 452ms (751 modules)
+ ✓ Compiled in 136ms (475 modules)
+ ✓ Compiled in 225ms (1398 modules)
+ ✓ Compiled /not-found in 282ms (1217 modules)
+ ✓ Compiled /api/debug/test-ws in 64ms (756 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled in 124ms (477 modules)
+ ✓ Compiled in 238ms (1391 modules)
+ ✓ Compiled /api/debug/test-minimal-realtime in 182ms (839 modules)
+Presence sync
+ ✓ Compiled in 85ms (477 modules)
+ ✓ Compiled in 181ms (1474 modules)
+ ✓ Compiled /api/debug/test-postgres-changes in 70ms (841 modules)
+ ✓ Compiled in 262ms (1304 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/debug/test-message in 69ms (839 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🧪 Test message API called: {
+  stream_id: 'test-stream-debug-fixed',
+  content: 'Testing real-time after fix #1',
+  hasSupabaseAdmin: true
+}
+🧪 Inserting test message: {
+  stream_id: 'test-stream-debug-fixed',
+  user_id: 'test-user',
+  user_name: 'Test User',
+  content: 'Testing real-time after fix #1'
+}
+✅ Test message inserted successfully: [
+  {
+    id: '0ede3162-f3a4-465f-9428-480688f93982',
+    stream_id: 'test-stream-debug-fixed',
+    user_id: 'test-user',
+    user_name: 'Test User',
+    content: 'Testing real-time after fix #1',
+    created_at: '2025-08-01T12:52:14.22447+00:00',
+    updated_at: '2025-08-01T12:52:14.22447+00:00'
+  }
+]
+ ✓ Compiled /api/debug/get-messages in 50ms (610 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔍 Getting messages for stream: test-stream-debug-fixed hasSupabase: true
+✅ Messages retrieved: 3 messages

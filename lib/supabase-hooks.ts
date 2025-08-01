@@ -67,22 +67,26 @@ export function useSupabaseChat(streamId: string) {
     // Subscribe to new messages
     console.log('🔌 Setting up real-time subscription for stream:', streamId)
     const channel = supabase
-      .channel(`chat:${streamId}`)
+      .channel(`chat-${streamId}`)
       .on(
         'postgres_changes',
         {
-          event: 'INSERT',
+          event: '*', // Listen to all events first to debug
           schema: 'public',
-          table: 'messages',
-          filter: `stream_id=eq.${streamId}`
+          table: 'messages'
         },
         (payload) => {
           console.log('📨 Real-time message received:', payload)
+          console.log('📨 Event type:', payload.eventType)
           console.log('📨 New message data:', payload.new)
-          setMessages(current => {
-            console.log('📨 Adding to current messages:', current.length, '+ 1')
-            return [...current, payload.new as Message]
-          })
+          
+          // Only add INSERT events for this stream
+          if (payload.eventType === 'INSERT' && payload.new?.stream_id === streamId) {
+            setMessages(current => {
+              console.log('📨 Adding to current messages:', current.length, '+ 1')
+              return [...current, payload.new as Message]
+            })
+          }
         }
       )
       .subscribe((status, err) => {
