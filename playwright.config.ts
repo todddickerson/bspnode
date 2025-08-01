@@ -14,7 +14,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    headless: false, // Run in headed mode to see what's happening
+    headless: true, // Run in headless mode
   },
 
   projects: [

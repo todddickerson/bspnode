@@ -1171,7 +1171,7 @@ export default function StudioPage() {
             <div className="flex items-center gap-4 text-sm text-gray-400">
               <span className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
-                {hosts.length}/{stream.maxHosts} hosts
+                {hosts.length} hosts
               </span>
               {isLive && (
                 <span className="flex items-center gap-1 text-red-500">

@@ -15,7 +15,12 @@
     "test:setup": "node scripts/setup-test-users.js",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "test:multi-host": "playwright test multi-host.spec.ts"
+    "test:multi-host": "playwright test multi-host.spec.ts",
+    "test:advanced": "playwright test multi-host-advanced.spec.ts",
+    "test:errors": "playwright test multi-host-errors.spec.ts",
+    "test:performance": "playwright test multi-host-performance.spec.ts",
+    "test:api": "playwright test api-multi-host.spec.ts",
+    "test:all": "playwright test --workers=1"
   },
   "dependencies": {
     "@mux/mux-node": "^8.0.0",

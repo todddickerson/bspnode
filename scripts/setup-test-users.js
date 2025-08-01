@@ -18,6 +18,16 @@ const TEST_USERS = [
     email: 'test-host2@example.com',
     password: 'test123456', 
     name: 'Host Two'
+  },
+  {
+    email: 'test-host3@example.com',
+    password: 'test123456',
+    name: 'Host Three'
+  },
+  {
+    email: 'test-unauthorized@example.com',
+    password: 'test123456',
+    name: 'Unauthorized User'
   }
 ]
 

@@ -922,3 +922,41 @@ Caused by:
 
 Import trace for requested module:
 ./app/stream/[id]/studio/page.tsx
+ ⨯ ./app/stream/[id]/studio/page.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+      ,-[[36;1;4m/Users/todddickerson/src/GitHub/bspnode/app/stream/[id]/studio/page.tsx[0m:1159:1]
+ [2m1159[0m |   }
+ [2m1160[0m | 
+ [2m1161[0m |   return (
+ [2m1162[0m |     <div className="min-h-screen bg-gray-900 text-white">
+      : [31;1m     ^^^[0m
+ [2m1163[0m |       {/* Floating Hearts Animation */}
+ [2m1164[0m |       <FloatingHearts heartCount={heartCount} enabled={showHearts} />
+ [2m1165[0m |       
+      `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/stream/[id]/studio/page.tsx
+ ⨯ ./app/stream/[id]/studio/page.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+      ,-[[36;1;4m/Users/todddickerson/src/GitHub/bspnode/app/stream/[id]/studio/page.tsx[0m:1159:1]
+ [2m1159[0m |   }
+ [2m1160[0m | 
+ [2m1161[0m |   return (
+ [2m1162[0m |     <div className="min-h-screen bg-gray-900 text-white">
+      : [31;1m     ^^^[0m
+ [2m1163[0m |       {/* Floating Hearts Animation */}
+ [2m1164[0m |       <FloatingHearts heartCount={heartCount} enabled={showHearts} />
+ [2m1165[0m |       
+      `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/stream/[id]/studio/page.tsx
