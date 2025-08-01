@@ -471,3 +471,96 @@ RTMP egress started: {
 ✅ Supabase client created successfully
 🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
 ✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+   Reload env: .env.local
+ ✓ Compiled in 383ms (1558 modules)
+ ✓ Compiled /not-found in 363ms (1391 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/debug-tracks in 92ms (1044 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 438ms (1261 modules)
+ ✓ Compiled in 0ms (1261 modules)
+ ✓ Compiled in 0ms (1261 modules)
+ ✓ Compiled in 0ms (1261 modules)
+ ✓ Compiled in 195ms (518 modules)
+ ✓ Compiled in 103ms (518 modules)
+ ✓ Compiled in 93ms (518 modules)
+ ✓ Compiled in 484ms (1087 modules)
+ ✓ Compiled in 392ms (1093 modules)
+ ✓ Compiled /api/streams/[id]/invites in 0ms (572 modules)
+ ✓ Compiled in 0ms (801 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 149ms (803 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 154ms (805 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ⨯ ./components/ui/collapsible.tsx:4:0
+Module not found: Can't resolve '@radix-ui/react-collapsible'
+[0m [90m 2 |[39m[0m
+[0m [90m 3 |[39m [36mimport[39m [33m*[39m [36mas[39m [33mReact[39m [36mfrom[39m [32m"react"[39m[0m
+[0m[31m[1m>[22m[39m[90m 4 |[39m [36mimport[39m [33m*[39m [36mas[39m [33mCollapsiblePrimitive[39m [36mfrom[39m [32m"@radix-ui/react-collapsible"[39m[0m
+[0m [90m 5 |[39m[0m
+[0m [90m 6 |[39m [36mconst[39m [33mCollapsible[39m [33m=[39m [33mCollapsiblePrimitive[39m[33m.[39m[33mRoot[39m[0m
+[0m [90m 7 |[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./components/streaming-status.tsx
+./app/stream/[id]/studio/page.tsx
+ ✓ Compiled in 343ms (1338 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 775ms (1198 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/end in 124ms (1200 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/start in 350ms (1205 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: Qv6th00v3pj7mC4uGJCWFMvGxhOx2mCA5iUjszAGlhj00
+ ✓ Compiled /api/streams/[id]/token in 129ms (1207 modules)
+ ✓ Compiled in 404ms (1727 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 188ms (1727 modules)
+ ✓ Compiled in 419ms (1741 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: 6KE3ayojeMG2deP6UtZ5p25ms7q6Q9wYYCp02802mlics
+ ✓ Compiled in 323ms (1739 modules)
+ ✓ Compiled in 411ms (1741 modules)
+ ✓ Compiled in 1ms (1206 modules)
+ ✓ Compiled in 0ms (1206 modules)
+ ✓ Compiled in 0ms (1206 modules)
+ ✓ Compiled in 0ms (1206 modules)
+ ✓ Compiled in 276ms (1741 modules)
+ ✓ Compiled in 267ms (1736 modules)
+ ✓ Compiled in 379ms (1736 modules)
+ ✓ Compiled in 303ms (1352 modules)
+ ✓ Compiled in 391ms (1121 modules)
+ ✓ Compiled in 530ms (1121 modules)
+ ✓ Compiled in 225ms (1121 modules)

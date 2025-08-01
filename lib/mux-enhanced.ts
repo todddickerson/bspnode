@@ -51,7 +51,7 @@ export async function createEnhancedLiveStream(
     reconnectWindow = 60,
     maxContinuousDuration = 24 * 60 * 60,
     simulcastTargets = [],
-    test = process.env.NODE_ENV === 'development',
+    test = process.env.MUX_TEST_MODE === 'true',
   } = config
 
   try {

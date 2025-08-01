@@ -23,7 +23,10 @@ import {
   LocalTrackPublication,
 } from 'livekit-client'
 import { StudioChatSupabase } from '@/components/studio-chat-supabase'
+import { StreamingStatus } from '@/components/streaming-status'
 import { useSupabasePresence, useSupabaseStreamStats } from '@/lib/supabase-hooks'
+import { useStreamingMonitor } from '@/lib/use-streaming-monitor'
+import { useDevicePreferences } from '@/lib/use-device-preferences'
 
 interface Stream {
   id: string
@@ -112,6 +115,60 @@ export default function StudioPage() {
   const { viewerCount: supabaseViewerCount } = useSupabasePresence(streamId, true)
   const { stats } = useSupabaseStreamStats(streamId)
   
+  // Streaming monitoring with automatic egress restart
+  const {
+    egressStatus,
+    isEgressConnected,
+    isEgressReconnecting,
+    egressError,
+    restartEgress,
+    getStreamingHealth,
+  } = useStreamingMonitor({
+    streamId,
+    room,
+    isLive,
+    onTrackChanged: (trackType, action) => {
+      console.log(`📹 ${trackType} track ${action}`)
+      toast({
+        title: "Video source changed",
+        description: `${trackType} track ${action} - restarting video output...`,
+        duration: 3000,
+      })
+    },
+    onEgressRestarted: (reason) => {
+      console.log(`🔄 Video output restarted: ${reason}`)
+      toast({
+        title: "Video output restored",
+        description: "Video feed should be working for viewers",
+        duration: 3000,
+      })
+    },
+    onStreamingError: (error) => {
+      console.error(`❌ Streaming error: ${error}`)
+      toast({
+        title: "Streaming issue detected",
+        description: error,
+        variant: "destructive",
+        duration: 5000,
+      })
+    },
+  })
+  
+  // Device preferences management
+  const {
+    preferences,
+    isLoaded: preferencesLoaded,
+    saveVideoDevice,
+    saveAudioDevice,
+    saveVideoEnabled,
+    saveAudioEnabled,
+    getPreferredDevice,
+    preferredVideoDeviceId,
+    preferredAudioDeviceId,
+    videoEnabled: preferredVideoEnabled,
+    audioEnabled: preferredAudioEnabled,
+  } = useDevicePreferences()
+  
   const localVideoRef = useRef<HTMLVideoElement>(null)
   const remoteVideoRefs = useRef<{ [key: string]: HTMLVideoElement | null }>({})
   const streamRef = useRef<MediaStream | null>(null)
@@ -119,7 +176,11 @@ export default function StudioPage() {
   useEffect(() => {
     fetchStreamAndHosts()
     fetchHostInvites()
-    initializePreview()
+    
+    // Only initialize preview after preferences are loaded
+    if (preferencesLoaded) {
+      initializePreview()
+    }
     
     // Supabase real-time subscriptions are handled by hooks
     
@@ -127,7 +188,7 @@ export default function StudioPage() {
       stopPreview()
       // Cleanup handled by Supabase hooks
     }
-  }, [streamId])
+  }, [streamId, preferencesLoaded])
 
   const initializePreview = async () => {
     try {
@@ -135,17 +196,35 @@ export default function StudioPage() {
         throw new Error('Media devices not supported in this browser')
       }
 
+      // Wait for preferences to load before initializing
+      if (!preferencesLoaded) {
+        console.log('Waiting for device preferences to load...')
+        return
+      }
+
+      // Enumerate devices first to get preferred devices
+      const devices = await navigator.mediaDevices.enumerateDevices()
+      const preferredVideoDevice = getPreferredDevice(devices, 'videoinput')
+      const preferredAudioDevice = getPreferredDevice(devices, 'audioinput')
+
+      console.log('Initializing with preferred devices:', {
+        video: preferredVideoDevice?.label || 'default',
+        audio: preferredAudioDevice?.label || 'default'
+      })
+
       const constraints: MediaStreamConstraints = {
-        video: {
+        video: preferredVideoEnabled ? {
+          deviceId: preferredVideoDevice?.deviceId ? { exact: preferredVideoDevice.deviceId } : undefined,
           width: { ideal: 1280 },
           height: { ideal: 720 },
-          facingMode: 'user'
-        },
-        audio: {
+          facingMode: preferredVideoDevice?.deviceId ? undefined : 'user'
+        } : false,
+        audio: preferredAudioEnabled ? {
+          deviceId: preferredAudioDevice?.deviceId ? { exact: preferredAudioDevice.deviceId } : undefined,
           echoCancellation: true,
           noiseSuppression: true,
           autoGainControl: true
-        }
+        } : false
       }
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints)
@@ -583,6 +662,8 @@ export default function StudioPage() {
         await room.localParticipant.setCameraEnabled(enabled)
         setIsCameraOn(enabled)
         setIsVideoEnabled(enabled)
+        // Save preference
+        devicePreferences.saveVideoEnabled(enabled)
       } catch (error) {
         console.error('Error toggling camera:', error)
         toast({
@@ -598,6 +679,8 @@ export default function StudioPage() {
         videoTrack.enabled = !videoTrack.enabled
         setIsVideoEnabled(videoTrack.enabled)
         setIsCameraOn(videoTrack.enabled)
+        // Save preference
+        devicePreferences.saveVideoEnabled(videoTrack.enabled)
       }
     }
   }
@@ -610,6 +693,8 @@ export default function StudioPage() {
         await room.localParticipant.setMicrophoneEnabled(enabled)
         setIsMicOn(enabled)
         setIsAudioEnabled(enabled)
+        // Save preference
+        devicePreferences.saveAudioEnabled(enabled)
       } catch (error) {
         console.error('Error toggling microphone:', error)
         toast({
@@ -625,6 +710,8 @@ export default function StudioPage() {
         audioTrack.enabled = !audioTrack.enabled
         setIsAudioEnabled(audioTrack.enabled)
         setIsMicOn(audioTrack.enabled)
+        // Save preference
+        devicePreferences.saveAudioEnabled(audioTrack.enabled)
       }
     }
   }
@@ -788,20 +875,24 @@ export default function StudioPage() {
       setVideoDevices(videoInputs)
       setAudioDevices(audioInputs)
       
-      // Load saved preferences or set defaults
-      const savedVideoDevice = localStorage.getItem('preferredVideoDevice')
-      const savedAudioDevice = localStorage.getItem('preferredAudioDevice')
+      // Use device preferences system
+      const preferredVideoDevice = getPreferredDevice(devices, 'videoinput')
+      const preferredAudioDevice = getPreferredDevice(devices, 'audioinput')
       
-      if (savedVideoDevice && videoInputs.some(d => d.deviceId === savedVideoDevice)) {
-        setSelectedVideoDevice(savedVideoDevice)
+      if (preferredVideoDevice) {
+        setSelectedVideoDevice(preferredVideoDevice.deviceId)
       } else if (videoInputs.length > 0 && !selectedVideoDevice) {
         setSelectedVideoDevice(videoInputs[0].deviceId)
+        // Save first device as preference
+        saveVideoDevice(videoInputs[0].deviceId)
       }
       
-      if (savedAudioDevice && audioInputs.some(d => d.deviceId === savedAudioDevice)) {
-        setSelectedAudioDevice(savedAudioDevice)
+      if (preferredAudioDevice) {
+        setSelectedAudioDevice(preferredAudioDevice.deviceId)
       } else if (audioInputs.length > 0 && !selectedAudioDevice) {
         setSelectedAudioDevice(audioInputs[0].deviceId)
+        // Save first device as preference
+        saveAudioDevice(audioInputs[0].deviceId)
       }
     } catch (error) {
       console.error('Error enumerating devices:', error)
@@ -876,8 +967,8 @@ export default function StudioPage() {
         }
       }
       
-      // Save preference to localStorage
-      localStorage.setItem('preferredVideoDevice', deviceId)
+      // Save preference using device preferences system
+      saveVideoDevice(deviceId)
       setSelectedVideoDevice(deviceId)
       
       toast({
@@ -940,8 +1031,8 @@ export default function StudioPage() {
         }
       }
       
-      // Save preference to localStorage
-      localStorage.setItem('preferredAudioDevice', deviceId)
+      // Save preference using device preferences system
+      saveAudioDevice(deviceId)
       setSelectedAudioDevice(deviceId)
       
       toast({
@@ -1043,6 +1134,19 @@ export default function StudioPage() {
             </Button>
           </div>
         </div>
+
+        {/* Streaming Status */}
+        {isConnected && room && room.localParticipant && (
+          <div className="px-6 py-2 bg-gray-800 border-b border-gray-700">
+            <StreamingStatus
+              streamingHealth={getStreamingHealth()}
+              egressStatus={egressStatus}
+              onRestartEgress={() => restartEgress('Manual restart')}
+              isLive={isLive}
+              compact={true}
+            />
+          </div>
+        )}
 
         {/* Main Content */}
         <div className="flex-1 flex">
