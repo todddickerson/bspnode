@@ -4,17 +4,15 @@ import { useEffect, useState, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { getSocket } from '@/lib/socket'
+import { useSupabaseChat } from '@/lib/supabase-hooks'
 import { Send } from 'lucide-react'
 
 interface Message {
   id: string
   content: string
-  user: {
-    name: string
-    id: string
-  }
-  createdAt: string
+  user_name: string
+  user_id: string
+  created_at: string
 }
 
 interface ChatProps {
@@ -23,60 +21,11 @@ interface ChatProps {
 
 export function Chat({ streamId }: ChatProps) {
   const { data: session } = useSession()
-  const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const socket = getSocket()
-
-  useEffect(() => {
-    if (!socket.connected) {
-      socket.connect()
-    }
-
-    socket.emit('join-stream', { streamId, userId: session?.user?.id || `viewer-${Date.now()}`, isHost: false })
-
-    // Load chat history
-    loadChatHistory()
-
-    socket.on('chat-message', (message: any) => {
-      const formattedMessage: Message = {
-        id: message.id,
-        content: message.message,
-        user: {
-          name: message.userName,
-          id: message.userId
-        },
-        createdAt: message.timestamp
-      }
-      setMessages((prev) => [...prev, formattedMessage])
-    })
-    
-    socket.on('messages-history', (history: any[]) => {
-      const formattedHistory = history.map(msg => ({
-        id: msg.id,
-        content: msg.message,
-        user: {
-          name: msg.userName,
-          id: msg.userId
-        },
-        createdAt: msg.timestamp
-      }))
-      setMessages(formattedHistory)
-    })
-    
-    // Request message history
-    socket.emit('get-messages', { streamId })
-
-    return () => {
-      socket.off('chat-message')
-      socket.off('messages-history')
-      socket.emit('leave-stream', { streamId })
-    }
-  }, [streamId, socket, session?.user?.id])
-
-  const loadChatHistory = async () => {
-    // Message history is now loaded via Socket.io
-  }
+  
+  // Use Supabase chat hook instead of Socket.io
+  const { messages, loading, sendMessage } = useSupabaseChat(streamId)
 
   useEffect(() => {
     scrollToBottom()
@@ -86,16 +35,14 @@ export function Chat({ streamId }: ChatProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const sendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!inputMessage.trim() || !session?.user) return
 
-    socket.emit('send-message', {
-      message: inputMessage,
-      streamId
-    })
-
-    setInputMessage('')
+    const success = await sendMessage(inputMessage)
+    if (success) {
+      setInputMessage('')
+    }
   }
 
   return (
@@ -105,15 +52,17 @@ export function Chat({ streamId }: ChatProps) {
       </div>
       
       <div className="flex-1 overflow-y-auto p-4 space-y-2">
-        {messages.length === 0 && (
+        {loading ? (
+          <p className="text-gray-500 text-sm text-center">Loading messages...</p>
+        ) : messages.length === 0 ? (
           <p className="text-gray-500 text-sm text-center">No messages yet. Be the first to chat!</p>
-        )}
+        ) : null}
         {messages.map((message) => (
           <div key={message.id} className="space-y-1">
             <div className="flex items-baseline gap-2">
-              <span className="font-medium text-sm">{message.user.name}</span>
+              <span className="font-medium text-sm">{message.user_name}</span>
               <span className="text-xs text-gray-500">
-                {new Date(message.createdAt).toLocaleTimeString()}
+                {new Date(message.created_at).toLocaleTimeString()}
               </span>
             </div>
             <p className="text-sm text-gray-700">{message.content}</p>
@@ -123,7 +72,7 @@ export function Chat({ streamId }: ChatProps) {
       </div>
 
       {session ? (
-        <form onSubmit={sendMessage} className="p-4 border-t">
+        <form onSubmit={handleSendMessage} className="p-4 border-t">
           <div className="flex gap-2">
             <Input
               value={inputMessage}
