@@ -675,15 +675,19 @@ export default function StudioPage() {
       const participant = room.localParticipant
       
       // Check video track state
-      const videoTrack = Array.from(participant.videoTracks.values())[0]
-      if (videoTrack) {
-        setIsCameraOn(!videoTrack.isMuted)
+      if (participant.videoTracks && participant.videoTracks.size > 0) {
+        const videoTrack = Array.from(participant.videoTracks.values())[0]
+        if (videoTrack && videoTrack.track) {
+          setIsCameraOn(!videoTrack.isMuted)
+        }
       }
       
       // Check audio track state  
-      const audioTrack = Array.from(participant.audioTracks.values())[0]
-      if (audioTrack) {
-        setIsMicOn(!audioTrack.isMuted)
+      if (participant.audioTracks && participant.audioTracks.size > 0) {
+        const audioTrack = Array.from(participant.audioTracks.values())[0]
+        if (audioTrack && audioTrack.track) {
+          setIsMicOn(!audioTrack.isMuted)
+        }
       }
     }
   }, [room, isConnected])
@@ -1161,7 +1165,7 @@ export default function StudioPage() {
                   variant={isCameraOn ? "default" : "secondary"}
                   size="icon"
                   onClick={toggleVideo}
-                  disabled={!isConnected}
+                  disabled={!hasPermission}
                 >
                   {isCameraOn ? <Video className="h-4 w-4" /> : <VideoOff className="h-4 w-4" />}
                 </Button>
@@ -1169,7 +1173,7 @@ export default function StudioPage() {
                   variant={isMicOn ? "default" : "secondary"}
                   size="icon"
                   onClick={toggleAudio}
-                  disabled={!isConnected}
+                  disabled={!hasPermission}
                 >
                   {isMicOn ? <Mic className="h-4 w-4" /> : <MicOff className="h-4 w-4" />}
                 </Button>

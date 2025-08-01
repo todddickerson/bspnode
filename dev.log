@@ -217,3 +217,26 @@ Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tok
 Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
  ✓ Compiled /api/streams/[id]/hosts in 313ms (1152 modules)
  ✓ Compiled (1154 modules)
+ ✓ Compiled /api/streams/[id]/start in 96ms (1159 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: x54r6Xb68UZShPpsEasSWDL664fjP4Zog92PSdn1M18
+ ✓ Compiled /api/streams/[id]/token in 89ms (1161 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/hosts in 245ms (1158 modules)
+ ✓ Compiled (1160 modules)
+ ✓ Compiled /api/streams in 84ms (1163 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 362ms (1657 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: MbIR00ZdfEjHNLZyoClTQxVlrgWe19BkzEmWmbiOjF01g
+ ✓ Compiled / in 326ms (1694 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 238ms (1708 modules)
