@@ -32,9 +32,11 @@ interface Stream {
 
 interface StreamViewerSupabaseProps {
   stream: Stream
+  videoValidated?: boolean
+  validationMessage?: string
 }
 
-export function StreamViewerSupabase({ stream }: StreamViewerSupabaseProps) {
+export function StreamViewerSupabase({ stream, videoValidated = false, validationMessage = '' }: StreamViewerSupabaseProps) {
   const { data: session } = useSession()
   const [heartTrigger, setHeartTrigger] = useState(0)
   const [streamDuration, setStreamDuration] = useState(0)
@@ -108,7 +110,8 @@ export function StreamViewerSupabase({ stream }: StreamViewerSupabaseProps) {
   const recordingFailed = stream.status === 'ENDED' && stream.recordingStatus === 'FAILED'
   const isWaitingForStream = stream.status === 'CREATED' && (stream.streamType === 'BROWSER' || stream.streamType === 'LIVEKIT')
   const isLiveStream = stream.status === 'LIVE'
-  const canShowVideo = (stream.muxPlaybackId && (isLiveStream || hasRecording)) || hasRecording
+  // Only show video for live streams if validated, always show for recordings
+  const canShowVideo = hasRecording || (isLiveStream && stream.muxPlaybackId && videoValidated)
 
   if (!canShowVideo && !isWaitingForStream && stream.status !== 'LIVE') {
     return (
@@ -195,15 +198,22 @@ export function StreamViewerSupabase({ stream }: StreamViewerSupabaseProps) {
                     <p className="text-gray-300">The broadcaster hasn't started yet.</p>
                   </div>
                 </div>
-              ) : stream.status === 'LIVE' && !stream.muxPlaybackId ? (
+              ) : stream.status === 'LIVE' && (!stream.muxPlaybackId || !videoValidated) ? (
                 <div className="w-full h-full bg-gray-900 flex items-center justify-center">
                   <div className="text-center text-white">
                     <div className="animate-pulse mb-4">
                       <Signal className="h-12 w-12 mx-auto text-gray-400" />
                     </div>
                     <h2 className="text-2xl font-bold mb-2">Connecting to Stream</h2>
-                    <p className="text-gray-300">The video will appear in a moment...</p>
-                    <p className="text-gray-500 text-sm mt-2">Stream is live, setting up video feed</p>
+                    <p className="text-gray-300">
+                      {validationMessage || 'The video will appear in a moment...'}
+                    </p>
+                    {!stream.muxPlaybackId && (
+                      <p className="text-gray-500 text-sm mt-2">Waiting for stream configuration...</p>
+                    )}
+                    {stream.muxPlaybackId && !videoValidated && (
+                      <p className="text-gray-500 text-sm mt-2">Validating video feed...</p>
+                    )}
                   </div>
                 </div>
               ) : (

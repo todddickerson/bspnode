@@ -31,20 +31,39 @@ export default function StreamViewerPage() {
   const streamId = params.id as string
   const [stream, setStream] = useState<Stream | null>(null)
   const [loading, setLoading] = useState(true)
+  const [videoValidated, setVideoValidated] = useState(false)
+  const [validationMessage, setValidationMessage] = useState<string>('')
 
   useEffect(() => {
     fetchStream()
   }, [streamId])
 
   useEffect(() => {
-    // Refresh stream data more frequently when waiting for video
-    const refreshInterval = stream?.status === 'LIVE' && !stream?.muxPlaybackId ? 1000 : 5000
-    const interval = setInterval(fetchStream, refreshInterval)
-    
-    return () => {
-      clearInterval(interval)
+    // Validate video feed when stream is live
+    if (stream?.status === 'LIVE' && stream?.muxPlaybackId && !videoValidated) {
+      validateVideoFeed()
     }
   }, [stream?.status, stream?.muxPlaybackId])
+
+  useEffect(() => {
+    // Refresh stream data and validation status
+    let interval: NodeJS.Timeout
+
+    if (stream?.status === 'LIVE') {
+      // More frequent checks when waiting for video validation
+      const refreshInterval = !videoValidated ? 2000 : 5000
+      interval = setInterval(() => {
+        fetchStream()
+        if (!videoValidated) {
+          validateVideoFeed()
+        }
+      }, refreshInterval)
+    }
+    
+    return () => {
+      if (interval) clearInterval(interval)
+    }
+  }, [stream?.status, videoValidated])
 
   const fetchStream = async () => {
     try {
@@ -62,6 +81,29 @@ export default function StreamViewerPage() {
       console.error('Error fetching stream:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const validateVideoFeed = async () => {
+    if (!stream) return
+
+    try {
+      const response = await fetch(`/api/streams/${streamId}/validate-video`)
+      if (response.ok) {
+        const result = await response.json()
+        
+        if (result.valid) {
+          setVideoValidated(true)
+          setValidationMessage('')
+        } else {
+          setVideoValidated(false)
+          setValidationMessage(result.reason || 'Waiting for video feed...')
+        }
+      }
+    } catch (error) {
+      console.error('Error validating video:', error)
+      setVideoValidated(false)
+      setValidationMessage('Unable to validate video feed')
     }
   }
 
@@ -146,7 +188,11 @@ export default function StreamViewerPage() {
     )
   }
 
-  return <StreamViewerSupabase stream={stream} />
+  return <StreamViewerSupabase 
+    stream={stream} 
+    videoValidated={videoValidated}
+    validationMessage={validationMessage}
+  />
 }
 
 function formatDuration(seconds: number) {

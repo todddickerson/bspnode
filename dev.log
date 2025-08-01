@@ -763,3 +763,83 @@ Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tok
  ✓ Compiled in 243ms (1089 modules)
  ✓ Compiled in 343ms (1091 modules)
  ✓ Compiled in 248ms (1091 modules)
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 1322ms (1192 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/invites in 229ms (1194 modules)
+ ✓ Compiled (1196 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 118ms (1198 modules)
+ ✓ Compiled /api/streams/[id]/start in 136ms (1203 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: kPu1G00KHz8RpI8ZNGvx6OODLYUQhZUDN01NfpUvpNE6k
+ ✓ Compiled /api/streams/[id]/token in 120ms (1205 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/auth/[...nextauth] in 267ms (1207 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 135ms (1209 modules)
+RTMP egress started: {
+  egressId: 'EG_zcRLBDPP57TX',
+  roomName: 'cmdt3n4eu000xlpgyznvx7exz',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+ ✓ Compiled /api/streams/[id]/debug-tracks in 134ms (1211 modules)
+RTMP egress started: {
+  egressId: 'EG_sLdrUWCZ6YgV',
+  roomName: 'cmdt3n4eu000xlpgyznvx7exz',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/heart in 425ms (1287 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled in 276ms (536 modules)
+ ✓ Compiled in 782ms (1511 modules)
+ ✓ Compiled in 0ms (975 modules)
+ ✓ Compiled in 0ms (975 modules)
+ ✓ Compiled in 1ms (975 modules)
+ ✓ Compiled in 1ms (975 modules)
+ ✓ Compiled in 338ms (1282 modules)
+ ✓ Compiled in 1ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 372ms (1282 modules)
+ ✓ Compiled in 1ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 277ms (1282 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 0ms (746 modules)
+ ✓ Compiled in 593ms (1280 modules)
+ ✓ Compiled in 305ms (1280 modules)
+ ✓ Compiled in 427ms (1280 modules)
+ ✓ Compiled in 313ms (1280 modules)
