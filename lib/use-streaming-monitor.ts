@@ -26,8 +26,8 @@ export function useStreamingMonitor({
     const { type, publication } = event
     
     console.log(`Video track ${type}:`, {
-      trackId: publication.trackSid,
-      source: publication.source,
+      trackId: publication?.trackSid || 'unknown',
+      source: publication?.source || 'unknown',
     })
     
     onTrackChanged?.('video', type)
@@ -43,8 +43,8 @@ export function useStreamingMonitor({
     const { type, publication } = event
     
     console.log(`Audio track ${type}:`, {
-      trackId: publication.trackSid,
-      source: publication.source,
+      trackId: publication?.trackSid || 'unknown',
+      source: publication?.source || 'unknown',
     })
     
     onTrackChanged?.('audio', type)

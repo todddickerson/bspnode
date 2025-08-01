@@ -564,3 +564,202 @@ Live stream created: 6KE3ayojeMG2deP6UtZ5p25ms7q6Q9wYYCp02802mlics
  ✓ Compiled in 391ms (1121 modules)
  ✓ Compiled in 530ms (1121 modules)
  ✓ Compiled in 225ms (1121 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/auth/[...nextauth] in 232ms (815 modules)
+ ✓ Compiled (817 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 226ms (819 modules)
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 575ms (1199 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/start in 129ms (1204 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: VM3005Ql9IdYhBM277FM900561801fc41Q314OmbY69F4o
+ ✓ Compiled /api/streams/[id]/token in 114ms (1206 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: DLuK2Cx17EXI7qWpGqV2jsA81CyFsvdVrDz39ftUWIg
+ ✓ Compiled in 308ms (1727 modules)
+ ✓ Compiled in 284ms (1727 modules)
+ ✓ Compiled in 161ms (1727 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: mNx00j5qFbk7tWWjFZ01S2mIRUoODt4wXZCVDOPxwIzIA
+ ✓ Compiled /api/streams/[id]/egress/start in 288ms (1208 modules)
+RTMP egress started: {
+  egressId: 'EG_8QZk2MTbVvEc',
+  roomName: 'cmdt24v16000plpgydmsbypjp',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+ ✓ Compiled /api/streams/[id]/debug-tracks in 177ms (1210 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/heart in 393ms (1286 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /not-found in 417ms (1812 modules)
+ ✓ Compiled in 734ms (1355 modules)
+ ✓ Compiled /api/streams/[id]/egress/status in 242ms (834 modules)
+Error getting egress status: TypeError: Cannot read properties of undefined (reading 'startsWith')
+    at new TwirpRpc (webpack-internal:///(rsc)/./node_modules/livekit-server-sdk/dist/TwirpRPC.js:20:14)
+    at new EgressClient (webpack-internal:///(rsc)/./node_modules/livekit-server-sdk/dist/EgressClient.js:20:16)
+    at GET (webpack-internal:///(rsc)/./app/api/streams/[id]/egress/status/route.ts:12:30)
+    at /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63815
+    at /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/trace/tracer.js:133:36
+    at NoopContextManager.with (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854)
+    at /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/trace/tracer.js:122:103
+    at NoopContextManager.with (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NextTracerImpl.trace (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/trace/tracer.js:122:28)
+    at /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:56866
+    at AsyncLocalStorage.run (node:async_hooks:346:14)
+    at Object.wrap (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:37102)
+    at /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:54639
+    at AsyncLocalStorage.run (node:async_hooks:346:14)
+    at Object.wrap (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:36351)
+    at /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:54601
+    at AsyncLocalStorage.run (node:async_hooks:346:14)
+    at eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53994)
+    at eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65073)
+    at doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:60)
+    at cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:46)
+    at ResponseCache.get (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/response-cache/index.js:49:26)
+    at DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:53)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+ ✓ Compiled in 237ms (1287 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 365ms (1287 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+Error getting egress status: TypeError: Do not know how to serialize a BigInt
+    at JSON.stringify (<anonymous>)
+    at serializeJavascriptValueToJSONString (node:internal/deps/undici/undici:4458:27)
+    at Response.json (node:internal/deps/undici/undici:9092:11)
+    at NextResponse.json (webpack-internal:///(rsc)/./node_modules/next/dist/server/web/spec-extension/response.js:66:35)
+    at GET (webpack-internal:///(rsc)/./app/api/streams/[id]/egress/status/route.ts:36:70)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:63809
+    at async eU.execute (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:53964)
+    at async eU.handle (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:65062)
+    at async doRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1447:28)
+    at async DevServer.renderPageComponent (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:1882:32)
+    at async DevServer.pipeImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/next-server.js:269:17)
+    at async DevServer.handleRequestImpl (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/base-server.js:791:17)
+    at async /Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async NextCustomServer.requestHandlerImpl [as requestHandler] (/Users/todddickerson/src/GitHub/bspnode/node_modules/next/dist/server/lib/router-server.js:377:13)
+ ✓ Compiled in 239ms (1287 modules)
+ ✓ Compiled in 1ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ✓ Compiled in 0ms (750 modules)
+ ○ Compiling /api/streams/[id]/egress/start ...
+ ✓ Compiled /api/streams/[id]/egress/start in 1028ms (1202 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/auth/[...nextauth] in 465ms (974 modules)
+ ✓ Compiled (976 modules)
+ ✓ Compiled /api/streams/[id]/hosts in 207ms (978 modules)
+ ✓ Compiled /api/streams in 468ms (1202 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/end in 125ms (1204 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/start in 132ms (1208 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: y6Sq9UWRwV00zcfu1VaynJukSchKjjCuCCRkEvrwxeEE
+ ✓ Compiled /api/streams/[id]/token in 357ms (1210 modules)
+ ✓ Compiled /api/streams/[id]/egress/start in 313ms (1212 modules)
+RTMP egress started: {
+  egressId: 'EG_NeTBbDgSn6FR',
+  roomName: 'cmdt2n993000tlpgytusiy7lr',
+  layout: 'speaker',
+  urls: [ 'rtmps://global-live.mux.com:443/app/***' ]
+}
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/egress/status in 291ms (747 modules)
+ ✓ Compiled in 253ms (535 modules)
+ ✓ Compiled in 509ms (1280 modules)
+ ✓ Compiled in 0ms (745 modules)
+ ✓ Compiled in 0ms (745 modules)
+ ✓ Compiled in 1ms (745 modules)
+ ✓ Compiled in 0ms (745 modules)
+ ✓ Compiled /api/streams/[id]/egress/status in 281ms (747 modules)
+ ✓ Compiled in 0ms (747 modules)
+ ✓ Compiled in 0ms (747 modules)
+ ✓ Compiled in 0ms (747 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 725ms (974 modules)
+ ○ Compiling /api/streams/[id]/heart ...
+ ✓ Compiled /api/streams/[id]/heart in 800ms (829 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled / in 410ms (757 modules)
+ ✓ Compiled /api/auth/[...nextauth] in 109ms (986 modules)
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 621ms (1210 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/end in 280ms (1212 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 343ms (1747 modules)
+ ✓ Compiled in 256ms (1744 modules)
+ ✓ Compiled in 350ms (1730 modules)
+ ✓ Compiled in 366ms (1089 modules)
+ ✓ Compiled in 283ms (1089 modules)
+ ✓ Compiled in 243ms (1089 modules)
+ ✓ Compiled in 343ms (1091 modules)
+ ✓ Compiled in 248ms (1091 modules)

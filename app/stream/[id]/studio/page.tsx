@@ -9,7 +9,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { 
   Video, VideoOff, Mic, MicOff, Radio, Square, Loader2, 
   Users, Copy, Share2, Settings, Phone, PhoneOff, Plus, X, Heart, MessageCircle,
-  Eye, Clock, Trash2, Send 
+  Eye, Clock, Trash2, Send, HeartHandshake 
 } from 'lucide-react'
 import {
   Room,
@@ -24,6 +24,7 @@ import {
 } from 'livekit-client'
 import { StudioChatSupabase } from '@/components/studio-chat-supabase'
 import { StreamingStatus } from '@/components/streaming-status'
+import { FloatingHearts } from '@/components/floating-hearts'
 import { useSupabasePresence, useSupabaseStreamStats } from '@/lib/supabase-hooks'
 import { useStreamingMonitor } from '@/lib/use-streaming-monitor'
 import { useDevicePreferences } from '@/lib/use-device-preferences'
@@ -111,6 +112,7 @@ export default function StudioPage() {
   const [showChat, setShowChat] = useState(false)
   const [viewerCount, setViewerCount] = useState(0)
   const [heartCount, setHeartCount] = useState(0)
+  const [showHearts, setShowHearts] = useState(true)
   // Use Supabase hooks for real-time features
   const { viewerCount: supabaseViewerCount } = useSupabasePresence(streamId, true)
   const { stats } = useSupabaseStreamStats(streamId)
@@ -1070,6 +1072,9 @@ export default function StudioPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* Floating Hearts Animation */}
+      <FloatingHearts heartCount={heartCount} enabled={showHearts} />
+      
       <div className="h-screen flex flex-col">
         {/* Header */}
         <div className="bg-gray-800 px-6 py-4 flex items-center justify-between">
@@ -1295,6 +1300,14 @@ export default function StudioPage() {
                   onClick={() => setShowChat(!showChat)}
                 >
                   <MessageCircle className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={showHearts ? "default" : "secondary"}
+                  size="icon"
+                  onClick={() => setShowHearts(!showHearts)}
+                  title={showHearts ? "Hide heart animations" : "Show heart animations"}
+                >
+                  <HeartHandshake className="h-4 w-4" />
                 </Button>
               </div>
               

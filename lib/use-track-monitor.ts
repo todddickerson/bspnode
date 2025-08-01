@@ -46,10 +46,10 @@ export function useTrackMonitor({
     }
     
     console.log(`Track ${type}:`, {
-      participantId: participant.sid,
-      trackId: publication.trackSid,
-      kind: publication.kind,
-      source: publication.source,
+      participantId: participant?.sid || 'unknown',
+      trackId: publication?.trackSid || 'unknown',
+      kind: publication?.kind || 'unknown',
+      source: publication?.source || 'unknown',
     })
   }, [onTrackChange, onVideoTrackChange, onAudioTrackChange])
 
