@@ -21,6 +21,8 @@ import {
   LocalParticipant,
   VideoPresets,
   LocalTrackPublication,
+  Participant,
+  ConnectionState,
 } from 'livekit-client'
 import { StudioChatSupabase } from '@/components/studio-chat-supabase'
 import { StreamingStatus } from '@/components/streaming-status'
@@ -113,6 +115,9 @@ export default function StudioPage() {
   const [viewerCount, setViewerCount] = useState(0)
   const [heartCount, setHeartCount] = useState(0)
   const [showHearts, setShowHearts] = useState(true)
+  const [participants, setParticipants] = useState<Map<string, Participant>>(new Map())
+  const [reconnecting, setReconnecting] = useState(false)
+  
   // Use Supabase hooks for real-time features
   const { viewerCount: supabaseViewerCount } = useSupabasePresence(streamId, true)
   const { stats } = useSupabaseStreamStats(streamId)
@@ -465,6 +470,18 @@ export default function StudioPage() {
       newRoom.on(RoomEvent.TrackUnsubscribed, handleTrackUnsubscribed)
       newRoom.on(RoomEvent.ActiveSpeakersChanged, handleActiveSpeakerChange)
       newRoom.on(RoomEvent.Disconnected, handleDisconnect)
+      newRoom.on(RoomEvent.ParticipantConnected, handleParticipantConnected)
+      newRoom.on(RoomEvent.ParticipantDisconnected, handleParticipantDisconnected)
+      newRoom.on(RoomEvent.ConnectionStateChanged, handleConnectionStateChanged)
+      
+      // Initialize participants from existing room participants
+      if (newRoom.participants.size > 0) {
+        const participantMap = new Map<string, Participant>()
+        newRoom.participants.forEach((participant, identity) => {
+          participantMap.set(identity, participant)
+        })
+        setParticipants(participantMap)
+      }
       
       // Connect to room without publishing yet
       await newRoom.connect(url, token, {
@@ -647,9 +664,70 @@ export default function StudioPage() {
   const handleActiveSpeakerChange = (speakers: RemoteParticipant[]) => {
     // Handle active speaker UI updates
   }
+  
+  const handleParticipantConnected = (participant: RemoteParticipant) => {
+    console.log('Participant connected:', participant.identity)
+    setParticipants(prev => {
+      const updated = new Map(prev)
+      updated.set(participant.identity, participant)
+      return updated
+    })
+    
+    toast({
+      title: 'Host Joined',
+      description: `${participant.identity} has joined the studio`,
+    })
+  }
+  
+  const handleParticipantDisconnected = (participant: RemoteParticipant) => {
+    console.log('Participant disconnected:', participant.identity)
+    setParticipants(prev => {
+      const updated = new Map(prev)
+      updated.delete(participant.identity)
+      return updated
+    })
+    
+    toast({
+      title: 'Host Left',
+      description: `${participant.identity} has left the studio`,
+    })
+  }
+  
+  const handleConnectionStateChanged = (state: ConnectionState) => {
+    console.log('Connection state changed:', state)
+    
+    if (state === ConnectionState.Reconnecting) {
+      setReconnecting(true)
+      toast({
+        title: 'Reconnecting...',
+        description: 'Connection lost, attempting to reconnect',
+      })
+    } else if (state === ConnectionState.Connected) {
+      if (reconnecting) {
+        setReconnecting(false)
+        toast({
+          title: 'Reconnected',
+          description: 'Connection restored',
+        })
+      }
+    } else if (state === ConnectionState.Disconnected) {
+      setReconnecting(false)
+      handleDisconnect()
+    }
+  }
 
-  const handleDisconnect = () => {
+  const handleDisconnect = async () => {
     setIsConnected(false)
+    
+    // Notify API that we're leaving
+    try {
+      await fetch(`/api/streams/${streamId}/leave`, {
+        method: 'POST',
+      })
+    } catch (error) {
+      console.error('Error notifying leave:', error)
+    }
+    
     toast({
       title: 'Disconnected',
       description: 'You have been disconnected from the studio',
@@ -863,7 +941,17 @@ export default function StudioPage() {
     }
   }
 
-  const leaveStudio = () => {
+  const leaveStudio = async () => {
+    try {
+      // Notify API that we're leaving
+      await fetch(`/api/streams/${streamId}/leave`, {
+        method: 'POST',
+      })
+    } catch (error) {
+      console.error('Error leaving stream:', error)
+    }
+    
+    // Disconnect from room
     room?.disconnect()
     router.push('/dashboard')
   }
@@ -1157,7 +1245,14 @@ export default function StudioPage() {
         <div className="flex-1 flex">
           {/* Video Grid */}
           <div className={`flex-1 p-4 transition-all duration-300 ${showChat ? 'pr-0' : ''}`}>
-            <div className="grid grid-cols-2 gap-4 h-full">
+            {/* Dynamic grid based on number of participants */}
+            <div className={`grid gap-4 h-full ${
+              participants.size === 0 ? 'grid-cols-1' :
+              participants.size === 1 ? 'grid-cols-2' :
+              participants.size <= 3 ? 'grid-cols-2' :
+              participants.size <= 5 ? 'grid-cols-3' :
+              'grid-cols-3'
+            }`}>
               {/* Local Video */}
               <div className="bg-gray-800 rounded-lg overflow-hidden relative aspect-video" data-testid="video-container">
                 <video
@@ -1216,18 +1311,9 @@ export default function StudioPage() {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                  <div className="absolute bottom-4 left-4 bg-black/70 px-3 py-1 rounded">
-                    {participant.name || participant.identity}
-                  </div>
-                </div>
-              ))}
-              
-              {/* Empty slots */}
-              {Array.from({ length: Math.max(0, (stream.maxHosts || 4) - hosts.length - 1) }).map((_, i) => (
-                <div key={`empty-${i}`} className="bg-gray-800 rounded-lg flex items-center justify-center aspect-video">
-                  <div className="text-center text-gray-600">
-                    <Users className="h-12 w-12 mx-auto mb-2" />
-                    <p>Waiting for host...</p>
+                  <div className="absolute bottom-4 left-4 bg-black/70 px-3 py-1 rounded flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-gray-500'}`} />
+                    <span className="text-sm">{participant.name || participant.identity}</span>
                   </div>
                 </div>
               ))}
@@ -1467,29 +1553,45 @@ export default function StudioPage() {
 
             {/* Host List */}
             <div className="bg-gray-700 rounded-lg p-4">
-              <h3 className="font-medium mb-3">Current Hosts</h3>
+              <h3 className="font-medium mb-3 flex items-center justify-between">
+                <span>Current Hosts</span>
+                <span className="text-xs text-gray-400">{hosts.length} / ∞</span>
+              </h3>
                 <div className="space-y-2">
-                  {hosts.map((host) => (
-                    <div key={host.id} className="flex items-center justify-between p-2 bg-gray-800 rounded">
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">{host.user.name}</p>
-                        <p className="text-xs text-gray-400">{host.role}</p>
+                  {hosts.map((host) => {
+                    // Check if this host is connected to LiveKit
+                    const isHostConnected = host.user.id === session?.user?.id 
+                      ? isConnected 
+                      : participants.has(host.user.name || host.user.email || '')
+                    
+                    return (
+                      <div key={host.id} className="flex items-center justify-between p-2 bg-gray-800 rounded">
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                          <div className={`w-2 h-2 rounded-full ${isHostConnected ? 'bg-green-500' : 'bg-gray-500'}`} 
+                               title={isHostConnected ? 'Connected' : 'Not connected'} />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium truncate">{host.user.name}</p>
+                            <p className="text-xs text-gray-400">{host.role}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {host.user.id === session?.user?.id ? (
+                            <span className="text-xs bg-blue-600 px-2 py-1 rounded">You</span>
+                          ) : stream?.userId === session?.user?.id ? (
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-6 w-6 text-red-400 hover:text-red-300"
+                              onClick={() => kickHost(host.id, host.user.name)}
+                              title="Remove host"
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          ) : null}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {host.user.id === session?.user?.id ? (
-                          <span className="text-xs bg-blue-600 px-2 py-1 rounded">You</span>
-                        ) : stream?.userId === session?.user?.id ? (
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-6 w-6 text-red-400 hover:text-red-300"
-                            onClick={() => kickHost(host.id, host.user.name)}
-                            title="Remove host"
-                          >
-                            <X className="h-3 w-3" />
-                          </Button>
-                        ) : null}
-                      </div>
+                    )
+                  })}
                     </div>
                   ))}
                   {hosts.length === 0 && (

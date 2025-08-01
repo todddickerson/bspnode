@@ -843,3 +843,82 @@ RTMP egress started: {
  ✓ Compiled in 305ms (1280 modules)
  ✓ Compiled in 427ms (1280 modules)
  ✓ Compiled in 313ms (1280 modules)
+ ○ Compiling /stream/[id]/join ...
+ ✓ Compiled /stream/[id]/join in 692ms (1276 modules)
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 568ms (979 modules)
+ ✓ Compiled /api/streams/[id] in 336ms (981 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+ ✓ Compiled /api/streams/[id]/hosts in 134ms (983 modules)
+ ✓ Compiled /api/streams/[id]/invites in 294ms (985 modules)
+ ○ Compiling /api/streams ...
+ ✓ Compiled /api/streams in 537ms (1209 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/end in 146ms (1211 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/streams/[id]/start in 172ms (1120 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: wQuWHBJC8Hbm123GcWYgp01OI8yUT301GkTycNXppamKY
+ ✓ Compiled /api/streams/[id]/token in 153ms (1122 modules)
+ ✓ Compiled /stream/[id] in 162ms (1217 modules)
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled /api/invites/validate in 183ms (1210 modules)
+Creating LiveKit room...
+Creating Mux live stream...
+Creating enhanced Mux live stream...
+Live stream created: gQBlpM00VvUPE01inwodqsQd4DH2uuPKo712WPOniczbY
+ ✓ Compiled in 529ms (1750 modules)
+🔧 Supabase client initialization: { hasUrl: true, hasAnonKey: true, urlLength: 40, keyLength: 208 }
+✅ Supabase client created successfully
+Initializing Mux with credentials: { hasTokenId: true, hasTokenSecret: true, tokenIdLength: 36 }
+ ✓ Compiled in 290ms (1750 modules)
+ ✓ Compiled in 524ms (1096 modules)
+ ✓ Compiled in 559ms (1096 modules)
+ ✓ Compiled in 241ms (1096 modules)
+ ✓ Compiled in 221ms (1096 modules)
+ ✓ Compiled in 242ms (1096 modules)
+ ✓ Compiled in 157ms (540 modules)
+ ✓ Compiled in 237ms (1096 modules)
+ ✓ Compiled in 206ms (1096 modules)
+ ⨯ ./app/stream/[id]/studio/page.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+      ,-[[36;1;4m/Users/todddickerson/src/GitHub/bspnode/app/stream/[id]/studio/page.tsx[0m:1159:1]
+ [2m1159[0m |   }
+ [2m1160[0m | 
+ [2m1161[0m |   return (
+ [2m1162[0m |     <div className="min-h-screen bg-gray-900 text-white">
+      : [31;1m     ^^^[0m
+ [2m1163[0m |       {/* Floating Hearts Animation */}
+ [2m1164[0m |       <FloatingHearts heartCount={heartCount} enabled={showHearts} />
+ [2m1165[0m |       
+      `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/stream/[id]/studio/page.tsx
+ ✓ Compiled in 97ms (504 modules)
+ ⨯ ./app/stream/[id]/studio/page.tsx
+Error: 
+  [31mx[0m Unexpected token `div`. Expected jsx identifier
+      ,-[[36;1;4m/Users/todddickerson/src/GitHub/bspnode/app/stream/[id]/studio/page.tsx[0m:1159:1]
+ [2m1159[0m |   }
+ [2m1160[0m | 
+ [2m1161[0m |   return (
+ [2m1162[0m |     <div className="min-h-screen bg-gray-900 text-white">
+      : [31;1m     ^^^[0m
+ [2m1163[0m |       {/* Floating Hearts Animation */}
+ [2m1164[0m |       <FloatingHearts heartCount={heartCount} enabled={showHearts} />
+ [2m1165[0m |       
+      `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./app/stream/[id]/studio/page.tsx

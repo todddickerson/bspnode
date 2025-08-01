@@ -99,20 +99,43 @@ export async function POST(
 
     // No host limit - let stream owners invite as many as they want
 
-    // Check if user is already a host
+    // Check if user has an existing host record
     const existingHost = await prisma.streamHost.findFirst({
       where: {
         streamId: params.id,
         userId,
-        leftAt: null,
+      },
+      orderBy: {
+        joinedAt: 'desc',
       },
     })
 
-    if (existingHost) {
-      return NextResponse.json(
-        { message: 'User is already a host' },
-        { status: 400 }
-      )
+    // If they have an active host record, they're already connected
+    if (existingHost && existingHost.leftAt === null) {
+      return NextResponse.json(existingHost, { status: 200 })
+    }
+    
+    // If they were a host before but left, allow them to rejoin
+    if (existingHost && existingHost.leftAt !== null) {
+      // Update the existing record to mark them as rejoined
+      const rejoinedHost = await prisma.streamHost.update({
+        where: { id: existingHost.id },
+        data: {
+          leftAt: null,
+          joinedAt: new Date(), // Update join time
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      })
+      
+      return NextResponse.json(rejoinedHost)
     }
 
     // Add host

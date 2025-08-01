@@ -11,7 +11,11 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "postinstall": "prisma generate",
-    "manage-egress": "node scripts/manage-egress.js"
+    "manage-egress": "node scripts/manage-egress.js",
+    "test:setup": "node scripts/setup-test-users.js",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:multi-host": "playwright test multi-host.spec.ts"
   },
   "dependencies": {
     "@mux/mux-node": "^8.0.0",

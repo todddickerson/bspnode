@@ -71,7 +71,16 @@ export async function GET(
       },
     })
 
-    return NextResponse.json(invites)
+    // Use NEXTAUTH_URL if available, otherwise fallback to request origin
+    const baseUrl = process.env.NEXTAUTH_URL || req.nextUrl.origin
+
+    // Add invite URLs to each invite
+    const invitesWithUrls = invites.map(invite => ({
+      ...invite,
+      inviteUrl: `${baseUrl}/stream/${params.id}/join?token=${invite.token}`
+    }))
+
+    return NextResponse.json(invitesWithUrls)
   } catch (error) {
     console.error('Error fetching invites:', error)
     return NextResponse.json(
@@ -158,9 +167,12 @@ export async function POST(
       },
     })
 
+    // Use NEXTAUTH_URL if available, otherwise fallback to request origin
+    const baseUrl = process.env.NEXTAUTH_URL || req.nextUrl.origin
+    
     return NextResponse.json({
       ...invite,
-      inviteUrl: `${req.nextUrl.origin}/stream/${params.id}/join?token=${token}`
+      inviteUrl: `${baseUrl}/stream/${params.id}/join?token=${token}`
     })
   } catch (error) {
     console.error('Error creating invite:', error)

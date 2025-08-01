@@ -101,20 +101,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Check max hosts limit
-    const currentHostsCount = await prisma.streamHost.count({
-      where: { 
-        streamId: streamId,
-        leftAt: null,
-      },
-    })
-
-    if (currentHostsCount >= (invite.stream.maxHosts || 4)) {
-      return NextResponse.json(
-        { message: 'Maximum number of hosts reached' },
-        { status: 400 }
-      )
-    }
+    // No host limit - removed per user request
 
     // Add user as host
     const host = await prisma.streamHost.create({
